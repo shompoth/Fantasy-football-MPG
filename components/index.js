@@ -1,0 +1,10 @@
+export { default as MainStats } from "./Stats/MainStats/MainStats";
+export { default as BigStats } from "./Stats/BigStats/BigStats";
+export { default as KeeperEfficient } from "./Stats/DivLittleStats/Keeper/KeerperEfficient";
+export { default as PlayerEfficient } from "./Stats/DivLittleStats/Player/Efficient/PlayerEfficient";
+export { default as PlayerShot } from "./Stats/DivLittleStats/Player/Shot/PlayerShot";
+export { default as PlayerPass } from "./Stats/DivLittleStats/Player/Pass/PlayerPass";
+export { default as PlayerStrong } from "./Stats/DivLittleStats/Player/Strong/PlayerStrong";
+export { default as Essential } from "./Stats/DivLittleStats/ComponentLittleStats/Essential";
+export { default as ParenthesisNormal } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
+export { default as Parenthesis } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
