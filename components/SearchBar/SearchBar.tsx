@@ -48,7 +48,8 @@ function SearchBar(props: any) {
 const styles = StyleSheet.create({
     textInputStyles: {
         height: 40,
-        borderWidth: 1,
+        borderWidth: 0.3,
+        fontSize: 12,
         paddingLeft: 10,
         marginVertical: 10,
         borderColor: "#99a0b2",
