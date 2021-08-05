@@ -1,5 +1,5 @@
 // Librairie
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
 
 //Composants
@@ -13,7 +13,7 @@ import {
     PlayerStrong,
 } from "../components";
 
-function PlayerDetails(props) {
+const PlayerDetails = props => {
     // Variables
     const player = props.route.params.player.item;
     return (
@@ -35,7 +35,6 @@ function PlayerDetails(props) {
                             width: "100%",
                         }}
                     >
-                        {console.log(player)}
                         <View style={{ ...styles.presentationDiv, marginBottom: 15 }}>
                             <Text style={styles.playerName}>
                                 {player.firstname} {player.lastname}
@@ -205,7 +204,7 @@ function PlayerDetails(props) {
             </View>
         </View>
     );
-}
+};
 const styles = StyleSheet.create({
     container: {
         flex: 1,

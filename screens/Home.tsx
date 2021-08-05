@@ -1,23 +1,36 @@
 // Librairies
+// Librairies
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
 // import axios from "axios";
+
+// Composant
+import { StatusBar } from "expo-status-bar";
 import {
     StyleSheet,
     Text,
     View,
     FlatList,
+    Image,
     Dimensions,
     TouchableHighlight,
     TouchableOpacity,
     ActivityIndicator,
+    TextProps,
+    TextInput,
 } from "react-native";
 
-function Home(props) {
+import { SearchBar } from "../components";
+
+function Home(props: any) {
     // States
     // const [dimensions, setDimensions] = useState({ window, screen });
 
-    const [tableList, setTableList] = useState(["Joueurs", "Poste", "Club", "Côte"]);
+    const [tableList, setTableList] = useState<string[]>([
+        "Joueurs",
+        "Poste",
+        "Club",
+        "Côte",
+    ]);
 
     const [players, setPlayers] = useState([
         {
@@ -537,8 +550,9 @@ function Home(props) {
             },
         },
     ]);
+    const [constPlayers, setConstPlayers]: any = useState([...players]);
 
-    const [sortPlayers, setSortPlayers] = useState(null);
+    const [sortPlayers, setSortPlayers] = useState<string | null>(null);
 
     // Cycles de vie
     // useEffect(() => {
@@ -567,8 +581,12 @@ function Home(props) {
     //     setDimensions({ window, screen });
     // };
 
-    const playerPosition = ultraPosition => {
-        let position;
+    // const addLetPlayers = (newValue: any) => {
+    //     setConstPlayers(newValue);
+    // };
+
+    const playerPosition = (ultraPosition: number): string => {
+        let position: string | null;
 
         switch (ultraPosition) {
             case 10:
@@ -593,10 +611,10 @@ function Home(props) {
                 position = null;
                 break;
         }
-        return position;
+        return position!;
     };
 
-    const settingSort = sort => {
+    const settingSort = (sort: string): void => {
         const newPlayers = [...players];
 
         if (sort === "Joueurs") {
@@ -625,6 +643,36 @@ function Home(props) {
         setPlayers(newPlayers);
     };
 
+    // CHECK TYPE ARROW
+
+    const displayArrow = (item: string) => {
+        let arrow;
+        if (item === "Joueurs") {
+            if (sortPlayers === "alphaDescending") {
+                arrow = <Text>(A-Z)</Text>;
+                // require("../assets/downArrow.png");
+            } else if (sortPlayers === "alphaAscending") {
+                arrow = <Text>(Z-A)</Text>;
+                // require("../assets/upArrow.png");
+            }
+        } else if (item === "Poste") {
+            if (sortPlayers === "posteAscending") {
+                arrow = <Text>(A-G)</Text>;
+                // require("../assets/upArrow.png");
+            } else if (sortPlayers === "posteDescending") {
+                arrow = <Text>(G-A)</Text>;
+                // require("../assets/downArrow.png");
+            }
+        }
+
+        return (
+            // <View>
+            //     <Image source={arrow} style={{ flex: 1, alignItems: "center" }} />
+            // </View>
+            <Text style={{ opacity: 0.6, fontSize: 9 }}>{arrow}</Text>
+        );
+    };
+
     return (
         <View
             style={{
@@ -641,7 +689,7 @@ function Home(props) {
                     style={{
                         marginTop: 10,
                         paddingHorizontal: 10,
-                        borderRadius: "10%",
+                        borderRadius: 10,
                         flexDirection: "row",
                         backgroundColor: "#e9ebee",
                     }}
@@ -671,11 +719,14 @@ function Home(props) {
                                     }}
                                 >
                                     {item}
+                                    {sortPlayers && displayArrow(item)}
                                 </Text>
                             </View>
                         </TouchableOpacity>
                     ))}
                 </View>
+                <SearchBar constPlayers={constPlayers} setPlayers={setPlayers} />
+
                 <FlatList
                     data={players}
                     renderItem={player => (
@@ -711,7 +762,8 @@ function Home(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: window.width > 450 ? "85%" : "95%",
+        // width: window.width > 450 ? "85%" : "95%",
+        width: "95%",
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 10,

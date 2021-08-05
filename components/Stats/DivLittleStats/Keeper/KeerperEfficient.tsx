@@ -1,6 +1,6 @@
 // Librairie
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 
 // Composants
 import Essential from "../ComponentLittleStats/Essential";
@@ -19,7 +19,8 @@ function KeeperEfficient(props) {
             <Parenthesis
                 stat={props.sumPenaltySave}
                 secondary={
-                    (props.sumPenaltySave / props.sumPenaltyFaced).toFixed(3) * 100
+                    props.sumPenaltySave / props.sumPenaltyFaced
+                    // (props.sumPenaltySave / props.sumPenaltyFaced).toFixed(3) * 100
                 }
                 pourcentage={true}
             >

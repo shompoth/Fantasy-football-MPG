@@ -8,3 +8,4 @@ export { default as PlayerStrong } from "./Stats/DivLittleStats/Player/Strong/Pl
 export { default as Essential } from "./Stats/DivLittleStats/ComponentLittleStats/Essential";
 export { default as ParenthesisNormal } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
 export { default as Parenthesis } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
+export { default as SearchBar } from "./SearchBar/SearchBar";

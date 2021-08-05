@@ -9,7 +9,7 @@ function Parenthesis(props) {
             <View style={styles.row}>
                 <Text style={styles.blueColor}>{props.stat} </Text>
                 {props.secondary && (
-                    <Text>
+                    <Text style={styles.lowerOpacity}>
                         ({props.secondary}
                         {props.pourcentage && <Text>%</Text>})
                     </Text>
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     },
     blueColor: {
         color: "#4054cc",
+    },
+    lowerOpacity: {
+        opacity: 0.7,
     },
 });
 
