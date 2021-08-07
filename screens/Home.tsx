@@ -1060,6 +1060,7 @@ function Home(props: any) {
         const newPlayers = [...players];
         const newFixedPlayers = [...constPlayers];
 
+        // if (!searchItemActivated) {
         if (sort === tableList[0]) {
             if (sortPlayers === "alphaDescending") {
                 setSortPlayers("alphaAscending");
@@ -1117,7 +1118,12 @@ function Home(props: any) {
             }
         }
         setPlayers(newPlayers);
+
         setLetPlayers(newFixedPlayers);
+        // }
+        // else {
+        //     setSortPlayers(null);
+        // }
 
         // !searchItemActivated && setLetPlayers(newPlayers);
     };
@@ -1202,6 +1208,7 @@ function Home(props: any) {
                                     }}
                                 >
                                     {item}
+                                    {/* {sortPlayers && displayArrow(item)} */}
                                     {sortPlayers && displayArrow(item)}
                                 </Text>
                             </View>
@@ -1240,9 +1247,10 @@ function Home(props: any) {
                     constPlayers={constPlayers}
                     setPlayers={setPlayers}
                     playerPosition={playerPosition}
+                    setSortPlayers={setSortPlayers}
                     letPlayers={letPlayers}
-                    searchItemActivated={searchItemActivated}
-                    setSearchItemActivated={setSearchItemActivated}
+                    // searchItemActivated={searchItemActivated}
+                    // setSearchItemActivated={setSearchItemActivated}
                 />
             </View>
         </View>

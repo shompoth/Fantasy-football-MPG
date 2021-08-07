@@ -8,9 +8,13 @@ import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterN
 
 function SearchBar(props: any) {
     // States
-    const [search, setSearch] = useState("");
-    const [buttonFilterName, setButtonFilterName] = useState(["Joueur", "Poste", "Club"]);
-    const [activeButtonName, setActiveButtonName] = useState(buttonFilterName[0]);
+    const [search, setSearch] = useState<string | null>(null);
+    const [buttonFilterName, setButtonFilterName] = useState<string[]>([
+        "Joueur",
+        "Poste",
+        "Club",
+    ]);
+    const [activeButtonName, setActiveButtonName] = useState<string>(buttonFilterName[0]);
 
     // Fonctions
     const searchPlayer = (text: string) => {
@@ -35,12 +39,15 @@ function SearchBar(props: any) {
             });
             props.setPlayers(newData);
             setSearch(text);
-            !props.searchItemActivated && props.setSearchItemActivated(true);
+            // !props.searchItemActivated && props.setSearchItemActivated(true);
+            // props.setSortPlayers(null);
         } else {
             setSearch(text);
-            props.setSearchItemActivated(false);
-            props.setPlayers(props.letPlayers);
+            // props.setSearchItemActivated(false);
+            props.setPlayers(props.constPlayers);
+            // props.setPlayers(props.letPlayers);
         }
+        props.setSortPlayers(null);
     };
 
     return (
