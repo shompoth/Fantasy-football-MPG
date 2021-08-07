@@ -9,3 +9,4 @@ export { default as Essential } from "./Stats/DivLittleStats/ComponentLittleStat
 export { default as ParenthesisNormal } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
 export { default as Parenthesis } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
 export { default as SearchBar } from "./SearchBar/SearchBar";
+export { default as Logo } from "./Logo/Logo";

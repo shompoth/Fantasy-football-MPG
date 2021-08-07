@@ -1,5 +1,4 @@
 // Librairies
-// Librairies
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
@@ -19,13 +18,33 @@ import {
     TextInput,
 } from "react-native";
 
-import { SearchBar } from "../components";
+import { Logo, SearchBar } from "../components";
+
+// Enum
+// enum TableList {
+//     Joueur = "Joueur",
+//     Poste = "Poste",
+//     Club = "Club",
+//     Cote = "Cote",
+// }
+
+// Variables
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
 
 function Home(props: any) {
+    //Variable
+    let activeFilterName;
+
     // States
-    // const [dimensions, setDimensions] = useState({ window, screen });
+    const [dimensions, setDimensions] = useState({ window, screen });
 
     const [tableList, setTableList] = useState<string[]>([
+        // TableList.Joueur,
+        // TableList.Poste,
+        // TableList.Club,
+        // TableList.Cote,
+
         "Joueurs",
         "Poste",
         "Club",
@@ -977,8 +996,11 @@ function Home(props: any) {
         },
     ]);
     const [constPlayers, setConstPlayers]: any = useState([...players]);
+    const [letPlayers, setLetPlayers]: any = useState([...players]);
 
     const [sortPlayers, setSortPlayers] = useState<string | null>(null);
+
+    const [searchItemActivated, setSearchItemActivated] = useState(false);
 
     // Cycles de vie
     // useEffect(() => {
@@ -993,23 +1015,17 @@ function Home(props: any) {
     //         });
     // }, []);
 
-    // useEffect(() => {
-    //     Dimensions.addEventListener("change", onChange);
-    //     return () => {
-    //         Dimensions.removeEventListener("change", onChange);
-    //     };
-    // });
-
-    // Variables
+    useEffect(() => {
+        Dimensions.addEventListener("change", onChange);
+        return () => {
+            Dimensions.removeEventListener("change", onChange);
+        };
+    });
 
     // Fonctions
-    // const onChange = ({ window, screen }) => {
-    //     setDimensions({ window, screen });
-    // };
-
-    // const addLetPlayers = (newValue: any) => {
-    //     setConstPlayers(newValue);
-    // };
+    const onChange = ({ window, screen }) => {
+        setDimensions({ window, screen });
+    };
 
     const playerPosition = (ultraPosition: number): string => {
         let position: string | null;
@@ -1040,13 +1056,17 @@ function Home(props: any) {
         return position!;
     };
 
-    const settingSort = (sort: string): void => {
+    const settingSort = (sort: string | null): void => {
         const newPlayers = [...players];
+        const newFixePlayers = [...constPlayers];
 
-        if (sort === "Joueurs") {
+        if (sort === tableList[0]) {
             if (sortPlayers === "alphaDescending") {
                 setSortPlayers("alphaAscending");
                 newPlayers.sort((a, b) =>
+                    b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
+                );
+                newFixePlayers.sort((a, b) =>
                     b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
                 );
             } else {
@@ -1054,49 +1074,86 @@ function Home(props: any) {
                 newPlayers.sort((a, b) =>
                     a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
                 );
+                newFixePlayers.sort((a, b) =>
+                    a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
+                );
             }
         }
-        if (sort === "Poste") {
+        if (sort === tableList[1]) {
             if (sortPlayers === "posteDescending") {
                 setSortPlayers("posteAscending");
                 newPlayers.sort((a, b) => (b.ultraPosition > a.ultraPosition ? 1 : -1));
+                newFixePlayers.sort((a, b) =>
+                    b.ultraPosition > a.ultraPosition ? 1 : -1,
+                );
             } else {
                 setSortPlayers("posteDescending");
                 newPlayers.sort((a, b) => (a.ultraPosition > b.ultraPosition ? 1 : -1));
+                newFixePlayers.sort((a, b) =>
+                    a.ultraPosition > b.ultraPosition ? 1 : -1,
+                );
             }
         }
-
+        if (sort === tableList[2]) {
+            if (sortPlayers === "clubDescending") {
+                setSortPlayers("clubAscending");
+                newPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
+                newFixePlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
+            } else {
+                setSortPlayers("clubDescending");
+                newPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+                newFixePlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+            }
+        }
+        if (sort === tableList[3]) {
+            if (sortPlayers === "coteDescending") {
+                setSortPlayers("coteAscending");
+                newPlayers.sort((a, b) => b.quotation - a.quotation);
+                newFixePlayers.sort((a, b) => b.quotation - a.quotation);
+            } else {
+                setSortPlayers("coteDescending");
+                newPlayers.sort((a, b) => a.quotation - b.quotation);
+                newFixePlayers.sort((a, b) => a.quotation - b.quotation);
+            }
+        }
         setPlayers(newPlayers);
+        setLetPlayers(newFixePlayers);
+
+        // !searchItemActivated && setLetPlayers(newPlayers);
     };
 
     // CHECK TYPE ARROW
-
     const displayArrow = (item: string) => {
         let arrow;
-        if (item === "Joueurs") {
+        if (item === tableList[0]) {
             if (sortPlayers === "alphaDescending") {
                 arrow = <Text>(A-Z)</Text>;
-                // require("../assets/downArrow.png");
             } else if (sortPlayers === "alphaAscending") {
                 arrow = <Text>(Z-A)</Text>;
-                // require("../assets/upArrow.png");
             }
-        } else if (item === "Poste") {
+        } else if (item === tableList[1]) {
             if (sortPlayers === "posteAscending") {
                 arrow = <Text>(A-G)</Text>;
-                // require("../assets/upArrow.png");
             } else if (sortPlayers === "posteDescending") {
                 arrow = <Text>(G-A)</Text>;
-                // require("../assets/downArrow.png");
             }
+        } else if (item === tableList[2]) {
+            if (sortPlayers === "clubAscending") {
+                arrow = <Text>(Z-A)</Text>;
+            } else if (sortPlayers === "clubDescending") {
+                arrow = <Text>(A-Z)</Text>;
+            }
+        } else if (item === tableList[3]) {
+            if (sortPlayers === "coteAscending") {
+                arrow = <Text>(∞-0)</Text>;
+            } else if (sortPlayers === "coteDescending") {
+                arrow = <Text>(0-∞)</Text>;
+            }
+        } else {
+            arrow = null;
         }
 
-        return (
-            // <View>
-            //     <Image source={arrow} style={{ flex: 1, alignItems: "center" }} />
-            // </View>
-            <Text style={{ opacity: 0.6, fontSize: 9 }}>{arrow}</Text>
-        );
+        return <Text style={{ opacity: 0.6, fontSize: 9 }}>{arrow}</Text>;
     };
 
     return (
@@ -1110,12 +1167,12 @@ function Home(props: any) {
         >
             <View style={styles.container}>
                 <StatusBar style="auto" />
-
+                <Logo dimensions={dimensions} />
                 <View
                     style={{
                         marginTop: 10,
                         paddingHorizontal: 10,
-                        borderRadius: 10,
+                        borderRadius: 7,
                         flexDirection: "row",
                         backgroundColor: "#e9ebee",
                     }}
@@ -1151,7 +1208,6 @@ function Home(props: any) {
                         </TouchableOpacity>
                     ))}
                 </View>
-                <SearchBar constPlayers={constPlayers} setPlayers={setPlayers} />
 
                 <FlatList
                     data={players}
@@ -1179,6 +1235,14 @@ function Home(props: any) {
                     style={{
                         width: "100%",
                     }}
+                />
+                <SearchBar
+                    constPlayers={constPlayers}
+                    setPlayers={setPlayers}
+                    playerPosition={playerPosition}
+                    letPlayers={letPlayers}
+                    searchItemActivated={searchItemActivated}
+                    setSearchItemActivated={setSearchItemActivated}
                 />
             </View>
         </View>

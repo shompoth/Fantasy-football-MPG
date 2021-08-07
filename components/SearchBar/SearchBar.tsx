@@ -3,58 +3,111 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
 // Composant
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
 
 function SearchBar(props: any) {
     // States
     const [search, setSearch] = useState("");
+    const [buttonFilterName, setButtonFilterName] = useState(["Joueur", "Poste", "Club"]);
+    const [activeButtonName, setActiveButtonName] = useState(buttonFilterName[0]);
 
     // Fonctions
-    const addLetPlayers = (list: any) => {
-        props.addStateLetPlayers(list);
-    };
-
     const searchPlayer = (text: string) => {
         if (text) {
+            // props.setActiveSearch(true);
             const newData = props.constPlayers.filter((item: any) => {
-                const itemData = item.lastname
-                    ? item.lastname.toUpperCase()
-                    : "".toUpperCase();
+                let itemData;
+                if (activeButtonName === buttonFilterName[0]) {
+                    itemData = item.lastname
+                        ? item.lastname.toUpperCase()
+                        : "".toUpperCase();
+                } else if (activeButtonName === buttonFilterName[1]) {
+                    itemData = props.playerPosition(item.ultraPosition)
+                        ? props.playerPosition(item.ultraPosition).toUpperCase()
+                        : "".toUpperCase();
+                } else if (activeButtonName === buttonFilterName[2]) {
+                    itemData = item.club ? item.club.toUpperCase() : "".toUpperCase();
+                }
+
                 const textData = text.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            // console.log(newData);
             props.setPlayers(newData);
             setSearch(text);
+            !props.searchItemActivated && props.setSearchItemActivated(true);
         } else {
-            props.setPlayers(props.constPlayers);
             setSearch(text);
+            props.setSearchItemActivated(false);
+            props.setPlayers(props.letPlayers);
         }
     };
 
     return (
-        <View style={{ width: "100%" }}>
+        <View style={styles.containerSearchBar}>
+            <View style={styles.divImage}>
+                <Image
+                    style={styles.loupeStyle}
+                    source={require("../../assets/loupe.png")}
+                />
+            </View>
             <TextInput
                 style={styles.textInputStyles}
                 value={search}
-                placeholder="Nom du joueur"
+                placeholder={activeButtonName}
                 underlineColorAndroid="transparent"
                 onChangeText={text => searchPlayer(text)}
             />
+
+            {buttonFilterName.map(item => (
+                <ButtonSelectFilterName
+                    key={item}
+                    activeButtonName={activeButtonName}
+                    setActiveButtonName={setActiveButtonName}
+                >
+                    {item}
+                </ButtonSelectFilterName>
+            ))}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    containerSearchBar: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 5,
+        borderRadius: 7,
+        backgroundColor: "#e9ebee",
+    },
     textInputStyles: {
         height: 40,
-        borderWidth: 0.3,
+        // borderWidth: 0.3,
         fontSize: 12,
-        paddingLeft: 10,
+        paddingLeft: 5,
         marginVertical: 10,
+        marginRight: 5,
         borderColor: "#99a0b2",
-        backgroundColor: "white",
+        // borderColor: "rgba(91, 196, 69, 0.7)",
+
+        backgroundColor: "#fff",
         borderRadius: 3,
+        flex: 1,
+    },
+    loupeStyle: {
+        height: 13,
+        width: 13,
+        backgroundColor: "#fff",
+        marginLeft: 10,
+        marginRight: 3,
+    },
+    divImage: {
+        height: 40,
+        backgroundColor: "#fff",
+        justifyContent: "center",
+        alignItems: "center",
     },
 });
 
