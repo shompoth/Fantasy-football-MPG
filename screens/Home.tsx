@@ -1058,7 +1058,7 @@ function Home(props: any) {
 
     const settingSort = (sort: string | null): void => {
         const newPlayers = [...players];
-        const newFixePlayers = [...constPlayers];
+        const newFixedPlayers = [...constPlayers];
 
         if (sort === tableList[0]) {
             if (sortPlayers === "alphaDescending") {
@@ -1066,7 +1066,7 @@ function Home(props: any) {
                 newPlayers.sort((a, b) =>
                     b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
                 );
-                newFixePlayers.sort((a, b) =>
+                newFixedPlayers.sort((a, b) =>
                     b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
                 );
             } else {
@@ -1074,7 +1074,7 @@ function Home(props: any) {
                 newPlayers.sort((a, b) =>
                     a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
                 );
-                newFixePlayers.sort((a, b) =>
+                newFixedPlayers.sort((a, b) =>
                     a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
                 );
             }
@@ -1083,13 +1083,13 @@ function Home(props: any) {
             if (sortPlayers === "posteDescending") {
                 setSortPlayers("posteAscending");
                 newPlayers.sort((a, b) => (b.ultraPosition > a.ultraPosition ? 1 : -1));
-                newFixePlayers.sort((a, b) =>
+                newFixedPlayers.sort((a, b) =>
                     b.ultraPosition > a.ultraPosition ? 1 : -1,
                 );
             } else {
                 setSortPlayers("posteDescending");
                 newPlayers.sort((a, b) => (a.ultraPosition > b.ultraPosition ? 1 : -1));
-                newFixePlayers.sort((a, b) =>
+                newFixedPlayers.sort((a, b) =>
                     a.ultraPosition > b.ultraPosition ? 1 : -1,
                 );
             }
@@ -1098,26 +1098,26 @@ function Home(props: any) {
             if (sortPlayers === "clubDescending") {
                 setSortPlayers("clubAscending");
                 newPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
-                newFixePlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
+                newFixedPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
             } else {
                 setSortPlayers("clubDescending");
                 newPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
-                newFixePlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+                newFixedPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
             }
         }
         if (sort === tableList[3]) {
             if (sortPlayers === "coteDescending") {
                 setSortPlayers("coteAscending");
                 newPlayers.sort((a, b) => b.quotation - a.quotation);
-                newFixePlayers.sort((a, b) => b.quotation - a.quotation);
+                newFixedPlayers.sort((a, b) => b.quotation - a.quotation);
             } else {
                 setSortPlayers("coteDescending");
                 newPlayers.sort((a, b) => a.quotation - b.quotation);
-                newFixePlayers.sort((a, b) => a.quotation - b.quotation);
+                newFixedPlayers.sort((a, b) => a.quotation - b.quotation);
             }
         }
         setPlayers(newPlayers);
-        setLetPlayers(newFixePlayers);
+        setLetPlayers(newFixedPlayers);
 
         // !searchItemActivated && setLetPlayers(newPlayers);
     };
