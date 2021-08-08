@@ -18,7 +18,8 @@ import {
     TextInput,
 } from "react-native";
 
-import { Logo, SearchBar } from "../components";
+import { Logo, SearchBar, FlatlistPlayers } from "../components";
+import { TouchableWithoutFeedback } from "react-native";
 
 // Enum
 // enum TableList {
@@ -34,7 +35,6 @@ const screen = Dimensions.get("screen");
 
 function Home(props: any) {
     //Variable
-    let activeFilterName;
 
     // States
     const [dimensions, setDimensions] = useState({ window, screen });
@@ -49,6 +49,7 @@ function Home(props: any) {
         "Poste",
         "Club",
         "Côte",
+        "",
     ]);
 
     const [players, setPlayers] = useState([
@@ -1000,8 +1001,6 @@ function Home(props: any) {
 
     const [sortPlayers, setSortPlayers] = useState<string | null>(null);
 
-    const [searchItemActivated, setSearchItemActivated] = useState(false);
-
     // Cycles de vie
     // useEffect(() => {
     //     axios
@@ -1023,7 +1022,7 @@ function Home(props: any) {
     });
 
     // Fonctions
-    const onChange = ({ window, screen }) => {
+    const onChange: any = ({ window, screen }) => {
         setDimensions({ window, screen });
     };
 
@@ -1120,12 +1119,6 @@ function Home(props: any) {
         setPlayers(newPlayers);
 
         setLetPlayers(newFixedPlayers);
-        // }
-        // else {
-        //     setSortPlayers(null);
-        // }
-
-        // !searchItemActivated && setLetPlayers(newPlayers);
     };
 
     // CHECK TYPE ARROW
@@ -1162,6 +1155,12 @@ function Home(props: any) {
         return <Text style={{ opacity: 0.6, fontSize: 9 }}>{arrow}</Text>;
     };
 
+    const flexItem = (item: string) => {
+        if (item === "Joueurs" || item === "Club") return 1.5;
+        else if (!item) return 0.3;
+        else return 1;
+    };
+
     return (
         <View
             style={{
@@ -1190,6 +1189,8 @@ function Home(props: any) {
                             style={{
                                 ...styles.listWrapper,
                                 paddingHorizontal: 0,
+                                flex: flexItem(item),
+                                // flex: item === "Joueurs" || item === "Club" ? 1.1 : 1,
                             }}
                             key={item}
                         >
@@ -1197,7 +1198,7 @@ function Home(props: any) {
                                 style={{
                                     ...styles.row,
                                     height: 50,
-                                    flex: 1,
+                                    // flex: 2,
                                 }}
                             >
                                 <Text
@@ -1208,7 +1209,6 @@ function Home(props: any) {
                                     }}
                                 >
                                     {item}
-                                    {/* {sortPlayers && displayArrow(item)} */}
                                     {sortPlayers && displayArrow(item)}
                                 </Text>
                             </View>
@@ -1219,24 +1219,20 @@ function Home(props: any) {
                 <FlatList
                     data={players}
                     renderItem={player => (
-                        <TouchableHighlight
+                        <TouchableOpacity
                             onPress={() => {
                                 props.navigation.navigate("Detail du joueur", {
                                     player,
                                 });
                             }}
-                            activeOpacity={1}
-                            underlayColor="rgba(91, 196, 69, 0.7)"
+                            activeOpacity={0.7}
+                            // underlayColor="rgba(91, 196, 69, 0.7)"
                         >
-                            <View style={styles.listWrapper}>
-                                <Text style={styles.row}>{player.item.lastname}</Text>
-                                <Text style={styles.row}>
-                                    {playerPosition(player.item.ultraPosition)}
-                                </Text>
-                                <Text style={styles.row}>{player.item.club}</Text>
-                                <Text style={styles.row}>{player.item.quotation}</Text>
-                            </View>
-                        </TouchableHighlight>
+                            <FlatlistPlayers
+                                player={player}
+                                playerPosition={playerPosition}
+                            />
+                        </TouchableOpacity>
                     )}
                     keyExtractor={player => player.id.toString()}
                     style={{
@@ -1249,8 +1245,6 @@ function Home(props: any) {
                     playerPosition={playerPosition}
                     setSortPlayers={setSortPlayers}
                     letPlayers={letPlayers}
-                    // searchItemActivated={searchItemActivated}
-                    // setSearchItemActivated={setSearchItemActivated}
                 />
             </View>
         </View>

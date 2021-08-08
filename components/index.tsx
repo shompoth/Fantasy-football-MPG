@@ -1,3 +1,4 @@
+import FlatlistPlayers from "./FlatlistPlayers/FlatlistPlayers";
 export { default as MainStats } from "./Stats/MainStats/MainStats";
 export { default as BigStats } from "./Stats/BigStats/BigStats";
 export { default as KeeperEfficient } from "./Stats/DivLittleStats/Keeper/KeerperEfficient";
@@ -10,3 +11,4 @@ export { default as ParenthesisNormal } from "./Stats/DivLittleStats/ComponentLi
 export { default as Parenthesis } from "./Stats/DivLittleStats/ComponentLittleStats/Parenthesis";
 export { default as SearchBar } from "./SearchBar/SearchBar";
 export { default as Logo } from "./Logo/Logo";
+export { default as FlatlistPlayers } from "./FlatlistPlayers/FlatlistPlayers";

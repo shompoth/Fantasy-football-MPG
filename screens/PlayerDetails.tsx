@@ -25,7 +25,16 @@ const PlayerDetails = props => {
             }}
         >
             <View
-                style={{ ...styles.container, backgroundColor: "rgba(91, 196, 69, 0.7)" }}
+                style={{
+                    ...styles.container,
+                    // backgroundColor: "rgba(91, 196, 69, .7)",
+                }}
+                style={{
+                    ...styles.container,
+                    backgroundColor: "rgba(91, 196, 69, .6)",
+                }}
+                // style={{ ...styles.container, backgroundColor: "#a6db9c" }}
+                // style={{ ...styles.container, backgroundColor: "#fff" }}
             >
                 <>
                     <View
