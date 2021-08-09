@@ -1,6 +1,9 @@
-//Librairies
+// Librairies
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+
+// Composants
+import Colors from "../../../constants/Colors";
 
 function BigStats(props) {
     return (
@@ -13,7 +16,7 @@ function BigStats(props) {
                         style={{
                             ...styles.card18,
                             marginRight: 5,
-                            backgroundColor: "#ca2e2a",
+                            backgroundColor: Colors.danger,
                         }}
                     >
                         {props.redCard}
@@ -21,7 +24,7 @@ function BigStats(props) {
                     <Text
                         style={{
                             ...styles.card18,
-                            backgroundColor: "#f1a640",
+                            backgroundColor: Colors.warning,
                         }}
                     >
                         {props.yellowCard}
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: "center",
         fontWeight: "bold",
-        color: "#4054cc",
+        color: Colors.secondary,
         marginTop: 5,
     },
     row: {
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
         marginTop: 5,
-        color: "white",
+        color: Colors.light,
         paddingHorizontal: 2,
     },
 });

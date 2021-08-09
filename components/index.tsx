@@ -1,4 +1,3 @@
-import FlatlistPlayers from "./FlatlistPlayers/FlatlistPlayers";
 export { default as MainStats } from "./Stats/MainStats/MainStats";
 export { default as BigStats } from "./Stats/BigStats/BigStats";
 export { default as KeeperEfficient } from "./Stats/DivLittleStats/Keeper/KeerperEfficient";

@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     TouchableHighlight,
 } from "react-native";
+import Colors from "../../../constants/Colors";
 
 function ButtonSelectFilterName(props: any) {
     // Variable
@@ -17,7 +18,7 @@ function ButtonSelectFilterName(props: any) {
     if (props.children === props.activeButtonName) {
         activeClassName = {
             borderWidth: 0.5,
-            borderColor: "#99a0b2",
+            borderColor: Colors.grayHint,
         };
     } else {
         activeClassName = null;
@@ -28,7 +29,7 @@ function ButtonSelectFilterName(props: any) {
             style={{ ...styles.button, ...activeClassName }}
             onPress={() => props.setActiveButtonName(props.children)}
             activeOpacity={0.8}
-            underlayColor="rgba(213, 215, 219, 1)"
+            underlayColor={Colors.grayLowHint}
         >
             <View>
                 <Text style={styles.buttonText}>{props.children}</Text>
@@ -40,7 +41,7 @@ function ButtonSelectFilterName(props: any) {
 const styles = StyleSheet.create({
     button: {
         borderRadius: 3,
-        backgroundColor: "#e9ebee",
+        backgroundColor: Colors.gray,
         padding: 5,
         marginHorizontal: 2,
         paddingVertical: 10,
@@ -51,10 +52,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         opacity: 0.4,
     },
-    // activeClassName: {
-    //     borderWidth: 0.4,
-    //     borderColor: "#99a0b2",
-    // },
 });
 
 export default ButtonSelectFilterName;

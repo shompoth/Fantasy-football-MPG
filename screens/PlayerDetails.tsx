@@ -13,6 +13,8 @@ import {
     PlayerStrong,
 } from "../components";
 
+import Colors from "../constants/Colors";
+
 const PlayerDetails = props => {
     // Variables
     const player = props.route.params.player.item;
@@ -27,14 +29,8 @@ const PlayerDetails = props => {
             <View
                 style={{
                     ...styles.container,
-                    // backgroundColor: "rgba(91, 196, 69, .7)",
+                    backgroundColor: Colors.primary,
                 }}
-                style={{
-                    ...styles.container,
-                    backgroundColor: "rgba(91, 196, 69, .6)",
-                }}
-                // style={{ ...styles.container, backgroundColor: "#a6db9c" }}
-                // style={{ ...styles.container, backgroundColor: "#fff" }}
             >
                 <>
                     <View
@@ -221,7 +217,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingTop: 10,
         paddingBottom: 20,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light,
         width: "100%",
     },
     divWrapperBigStats: {
@@ -229,7 +225,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         paddingHorizontal: 10,
         borderBottomWidth: 0.3,
-        borderBottomColor: "#e9ebee",
+        borderBottomColor: Colors.gray,
         width: "100%",
     },
     divWrapperLittleStats: {
@@ -258,18 +254,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: "center",
         fontWeight: "bold",
-        color: "#4054cc",
+        color: Colors.secondary,
         marginTop: 5,
     },
     blueColor: {
-        color: "#4054cc",
+        color: Colors.secondary,
     },
     card18: {
         fontSize: 18,
         textAlign: "center",
         fontWeight: "bold",
         marginTop: 5,
-        color: "white",
+        color: Colors.light,
         paddingHorizontal: 2,
     },
     textCenter18: {

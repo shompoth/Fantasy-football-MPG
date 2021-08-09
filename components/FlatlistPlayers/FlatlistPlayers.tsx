@@ -9,7 +9,11 @@ import {
     Image,
     Alert,
     TouchableWithoutFeedback,
+    YellowBox,
 } from "react-native";
+
+import { Icon } from "../../UI";
+import Colors from "../../constants/Colors";
 
 const FlatlistPlayers = (props: any) => {
     // States
@@ -25,12 +29,7 @@ const FlatlistPlayers = (props: any) => {
         const sourceImage = showPlusImage ? plusImage : removeImage;
         return (
             <>
-                {/* {Alert.alert(
-                    player.lastname + showPlusImage
-                        ? "à été ajouté"
-                        : "à été retiré " + "votre équipe",
-                )} */}
-                <Image
+                {/* <Image
                     source={sourceImage}
                     style={{
                         justifyContent: "center",
@@ -38,6 +37,11 @@ const FlatlistPlayers = (props: any) => {
                         height: 17,
                         width: 17,
                     }}
+                /> */}
+                <Icon
+                    name={showPlusImage ? "add-circle" : "close-circle"}
+                    color={showPlusImage ? Colors.success : Colors.danger}
+                    size={20}
                 />
             </>
         );
@@ -55,7 +59,7 @@ const FlatlistPlayers = (props: any) => {
         <View
             style={{
                 ...styles.listWrapper,
-                backgroundColor: showPlusImage ? "white" : "rgba(91, 196, 69, .6)",
+                backgroundColor: showPlusImage ? Colors.light : Colors.primaryLight,
             }}
         >
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.lastname}</Text>
@@ -74,8 +78,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "nowrap",
         borderBottomWidth: 1,
-        borderBottomColor: "#e9ebee",
+        borderBottomColor: Colors.gray,
         paddingHorizontal: 10,
+        borderRadius: 3,
     },
     row: {
         flex: 1,

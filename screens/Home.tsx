@@ -11,6 +11,7 @@ import {
     FlatList,
     Image,
     Dimensions,
+    SafeAreaView,
     TouchableHighlight,
     TouchableOpacity,
     ActivityIndicator,
@@ -19,7 +20,7 @@ import {
 } from "react-native";
 
 import { Logo, SearchBar, FlatlistPlayers } from "../components";
-import { TouchableWithoutFeedback } from "react-native";
+import Colors from "../constants/Colors";
 
 // Enum
 // enum TableList {
@@ -1167,7 +1168,7 @@ function Home(props: any) {
                 alignItems: "center",
                 flex: 1,
                 justifyContent: "center",
-                backgroundColor: "#fff",
+                backgroundColor: Colors.light,
             }}
         >
             <View style={styles.container}>
@@ -1177,9 +1178,9 @@ function Home(props: any) {
                     style={{
                         marginTop: 10,
                         paddingHorizontal: 10,
-                        borderRadius: 7,
+                        borderRadius: 5,
                         flexDirection: "row",
-                        backgroundColor: "#e9ebee",
+                        backgroundColor: Colors.gray,
                     }}
                 >
                     {tableList.map(item => (
@@ -1204,7 +1205,7 @@ function Home(props: any) {
                                 <Text
                                     style={{
                                         ...styles.row,
-                                        color: "#99a0b2",
+                                        color: Colors.grayHint,
                                         fontWeight: "bold",
                                     }}
                                 >
@@ -1221,7 +1222,7 @@ function Home(props: any) {
                     renderItem={player => (
                         <TouchableOpacity
                             onPress={() => {
-                                props.navigation.navigate("Detail du joueur", {
+                                props.navigation.navigate("Detail", {
                                     player,
                                 });
                             }}
@@ -1260,14 +1261,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingTop: 10,
         paddingBottom: 20,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light,
     },
     listWrapper: {
         flex: 1,
         flexDirection: "row",
         flexWrap: "nowrap",
         borderBottomWidth: 1,
-        borderBottomColor: "#e9ebee",
+        borderBottomColor: Colors.gray,
         paddingHorizontal: 10,
     },
     row: {

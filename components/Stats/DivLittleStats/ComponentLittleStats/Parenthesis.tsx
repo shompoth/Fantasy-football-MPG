@@ -2,6 +2,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+// Composant
+import Colors from "../../../../constants/Colors";
+
 function Parenthesis(props) {
     return (
         <View style={styles.rowDiv}>
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
     },
     blueColor: {
-        color: "#4054cc",
+        color: Colors.secondary,
     },
     lowerOpacity: {
         opacity: 0.7,

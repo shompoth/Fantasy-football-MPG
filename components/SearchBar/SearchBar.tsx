@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
 
+import Colors from "../../constants/Colors";
+
 function SearchBar(props: any) {
     // States
     const [search, setSearch] = useState<string | null>(null);
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 5,
         borderRadius: 7,
-        backgroundColor: "#e9ebee",
+        backgroundColor: Colors.gray,
     },
     textInputStyles: {
         height: 40,
@@ -96,23 +98,23 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         marginVertical: 10,
         marginRight: 5,
-        borderColor: "#99a0b2",
+        borderColor: Colors.grayHint,
         // borderColor: "rgba(91, 196, 69, 0.7)",
 
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light,
         borderRadius: 3,
         flex: 1,
     },
     loupeStyle: {
         height: 13,
         width: 13,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light,
         marginLeft: 10,
         marginRight: 3,
     },
     divImage: {
         height: 40,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.light,
         justifyContent: "center",
         alignItems: "center",
     },
