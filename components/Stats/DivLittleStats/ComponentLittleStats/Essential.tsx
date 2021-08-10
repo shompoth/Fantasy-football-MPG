@@ -1,8 +1,6 @@
-// Librairie
+// Librairies
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-
-// Composant
 import Colors from "../../../../constants/Colors";
 
 function Essential(props) {

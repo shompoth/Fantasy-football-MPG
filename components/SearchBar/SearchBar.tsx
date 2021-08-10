@@ -1,12 +1,11 @@
 // Librairies
 import React, { useState, useEffect } from "react";
+import Colors from "../../constants/Colors";
 // import axios from "axios";
 
-// Composant
+// Composants
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
-
-import Colors from "../../constants/Colors";
 
 function SearchBar(props: any) {
     // States
@@ -88,15 +87,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 5,
+        marginTop: 10,
         borderRadius: 7,
         backgroundColor: Colors.gray,
     },
     textInputStyles: {
-        height: 40,
+        height: 35,
         // borderWidth: 0.3,
         fontSize: 12,
         paddingLeft: 5,
-        marginVertical: 10,
+        marginVertical: 5,
         marginRight: 5,
         borderColor: Colors.grayHint,
         // borderColor: "rgba(91, 196, 69, 0.7)",
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         marginRight: 3,
     },
     divImage: {
-        height: 40,
+        height: 35,
         backgroundColor: Colors.light,
         justifyContent: "center",
         alignItems: "center",

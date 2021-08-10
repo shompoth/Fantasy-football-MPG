@@ -1,8 +1,9 @@
 // Librairies
 import React from "react";
+import Colors from "../../../constants/Colors";
 // import axios from "axios";
 
-// Composant
+// Composants
 import {
     StyleSheet,
     Text,
@@ -10,7 +11,6 @@ import {
     TouchableOpacity,
     TouchableHighlight,
 } from "react-native";
-import Colors from "../../../constants/Colors";
 
 function ButtonSelectFilterName(props: any) {
     // Variable

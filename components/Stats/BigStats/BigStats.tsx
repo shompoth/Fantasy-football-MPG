@@ -1,8 +1,6 @@
 // Librairies
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-
-// Composants
 import Colors from "../../../constants/Colors";
 
 function BigStats(props) {

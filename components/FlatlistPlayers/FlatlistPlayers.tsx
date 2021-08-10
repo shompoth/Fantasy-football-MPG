@@ -1,5 +1,6 @@
 // Librairies
 import React, { useState } from "react";
+import Colors from "../../constants/Colors";
 
 // Composants
 import {
@@ -13,7 +14,6 @@ import {
 } from "react-native";
 
 import { Icon } from "../../UI";
-import Colors from "../../constants/Colors";
 
 const FlatlistPlayers = (props: any) => {
     // States
@@ -47,10 +47,10 @@ const FlatlistPlayers = (props: any) => {
         );
     };
 
-    const showAlert = (player: string) => {
+    const showAlert = () => {
         setShowPlusImage(!showPlusImage);
         Alert.alert(
-            player,
+            player.firstname + " " + player.lastname,
             showPlusImage ? "rejoint votre équipe" : "quitte votre équipe",
         );
     };
@@ -66,7 +66,7 @@ const FlatlistPlayers = (props: any) => {
             <Text style={styles.row}>{props.playerPosition(player.ultraPosition)}</Text>
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.club}</Text>
             <Text style={styles.row}>{player.quotation}</Text>
-            <TouchableWithoutFeedback onPress={() => showAlert(player.lastname)}>
+            <TouchableWithoutFeedback onPress={() => showAlert()}>
                 <View style={{ ...styles.row, flex: 0.3 }}>{renderImage()}</View>
             </TouchableWithoutFeedback>
         </View>

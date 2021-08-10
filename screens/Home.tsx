@@ -1,8 +1,9 @@
 // Librairies
 import React, { useState, useEffect } from "react";
+import Colors from "../constants/Colors";
 // import axios from "axios";
 
-// Composant
+// Composants
 import { StatusBar } from "expo-status-bar";
 import {
     StyleSheet,
@@ -20,7 +21,6 @@ import {
 } from "react-native";
 
 import { Logo, SearchBar, FlatlistPlayers } from "../components";
-import Colors from "../constants/Colors";
 
 // Enum
 // enum TableList {
@@ -1174,13 +1174,20 @@ function Home(props: any) {
             <View style={styles.container}>
                 <StatusBar style="auto" />
                 <Logo dimensions={dimensions} />
+                <SearchBar
+                    constPlayers={constPlayers}
+                    setPlayers={setPlayers}
+                    playerPosition={playerPosition}
+                    setSortPlayers={setSortPlayers}
+                    letPlayers={letPlayers}
+                />
                 <View
                     style={{
-                        marginTop: 10,
+                        // marginTop: 10,
                         paddingHorizontal: 10,
                         borderRadius: 5,
                         flexDirection: "row",
-                        backgroundColor: Colors.gray,
+                        // backgroundColor: Colors.gray,
                     }}
                 >
                     {tableList.map(item => (
@@ -1190,6 +1197,8 @@ function Home(props: any) {
                             style={{
                                 ...styles.listWrapper,
                                 paddingHorizontal: 0,
+                                borderBottomWidth: 0,
+
                                 flex: flexItem(item),
                                 // flex: item === "Joueurs" || item === "Club" ? 1.1 : 1,
                             }}
@@ -1240,13 +1249,13 @@ function Home(props: any) {
                         width: "100%",
                     }}
                 />
-                <SearchBar
+                {/* <SearchBar
                     constPlayers={constPlayers}
                     setPlayers={setPlayers}
                     playerPosition={playerPosition}
                     setSortPlayers={setSortPlayers}
                     letPlayers={letPlayers}
-                />
+                /> */}
             </View>
         </View>
     );
@@ -1259,8 +1268,9 @@ const styles = StyleSheet.create({
         width: "95%",
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 10,
-        paddingBottom: 20,
+        paddingTop: 5,
+        // paddingBottom: 20,
+        paddingBottom: 0,
         backgroundColor: Colors.light,
     },
     listWrapper: {

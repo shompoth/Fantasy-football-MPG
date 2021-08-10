@@ -1,8 +1,9 @@
-// Librairie
+// Librairies
 import React, { useState, useEffect, FC } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
+import Colors from "../constants/Colors";
 
-//Composants
+// Composants
 import {
     BigStats,
     MainStats,
@@ -12,8 +13,6 @@ import {
     PlayerPass,
     PlayerStrong,
 } from "../components";
-
-import Colors from "../constants/Colors";
 
 const PlayerDetails = props => {
     // Variables
@@ -215,8 +214,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 10,
-        paddingBottom: 20,
+        // paddingTop: 10,
+        // paddingBottom: 10,
+        paddingVertical: 5,
         backgroundColor: Colors.light,
         width: "100%",
     },
