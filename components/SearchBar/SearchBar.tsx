@@ -6,6 +6,7 @@ import Colors from "../../constants/Colors";
 // Composants
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
+import { Icon } from "../../UI";
 
 function SearchBar(props: any) {
     // States
@@ -18,7 +19,7 @@ function SearchBar(props: any) {
     const [activeButtonName, setActiveButtonName] = useState<string>(buttonFilterName[0]);
 
     // Fonctions
-    const searchPlayer = (text: string) => {
+    const searchPlayer = (text: string | null) => {
         if (text) {
             // props.setActiveSearch(true);
             const newData = props.constPlayers.filter((item: any) => {
@@ -53,12 +54,14 @@ function SearchBar(props: any) {
 
     return (
         <View style={styles.containerSearchBar}>
-            <View style={styles.divImage}>
-                <Image
+            {/* <Image
                     style={styles.loupeStyle}
                     source={require("../../assets/loupe.png")}
-                />
+                /> */}
+            <View style={{ ...styles.divImage, paddingLeft: 5 }}>
+                <Icon name="search" color={Colors.grayHint} size={18} />
             </View>
+
             <TextInput
                 style={styles.textInputStyles}
                 value={search}
@@ -66,6 +69,27 @@ function SearchBar(props: any) {
                 underlineColorAndroid="transparent"
                 onChangeText={text => searchPlayer(text)}
             />
+            <View
+                style={{
+                    ...styles.divImage,
+                    marginRight: 5,
+                    paddingRight: 5,
+                }}
+            >
+                {search ? (
+                    <TouchableOpacity
+                        onPress={() => searchPlayer(null)}
+                        activeOpacity={0.7}
+                    >
+                        <Icon
+                            name="close-circle"
+                            color={Colors.grayLowHint}
+                            size={18}
+                            onPress={() => console.log("ok")}
+                        />
+                    </TouchableOpacity>
+                ) : null}
+            </View>
 
             {buttonFilterName.map(item => (
                 <ButtonSelectFilterName
@@ -93,14 +117,10 @@ const styles = StyleSheet.create({
     },
     textInputStyles: {
         height: 35,
-        // borderWidth: 0.3,
         fontSize: 12,
         paddingLeft: 5,
         marginVertical: 5,
-        marginRight: 5,
         borderColor: Colors.grayHint,
-        // borderColor: "rgba(91, 196, 69, 0.7)",
-
         backgroundColor: Colors.light,
         borderRadius: 3,
         flex: 1,
