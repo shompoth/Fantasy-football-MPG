@@ -2,6 +2,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import Colors from "../constants/Colors";
 // Ecrans
 import HomeScreen from "../screens/Home";
@@ -10,6 +11,8 @@ import MyTeamScreen from "../screens/MyTeam";
 
 // Composant
 import { Icon } from "../UI";
+// import HeaderButton from "../UI/HeaderButton";
+import { Image } from "react-native";
 
 // Variable
 const headerOptions = {
@@ -24,12 +27,35 @@ const MainStackNavigator = () => {
             <MainStackNavigatorComponent.Screen
                 name="Home"
                 component={HomeScreen}
-                options={{ title: "Joueurs Ligue 1 - 2018", ...headerOptions }}
+                options={{
+                    title: "Joueurs Ligue 1 - 2018",
+                    headerRight: () => (
+                        <Image
+                            source={require("../assets/logoMPG.png")}
+                            style={{
+                                width: 75,
+                                height: 30,
+                                marginRight: 10,
+                            }}
+                        />
+                    ),
+
+                    ...headerOptions,
+                }}
             />
             <MainStackNavigatorComponent.Screen
                 name="Detail"
                 component={PlayerDetailsScreen}
-                options={{ title: "Détail du joueur", ...headerOptions }}
+                options={{
+                    title: "Détail du joueur",
+                    headerRight: () => (
+                        <Image
+                            source={require("../assets/logoMPG.png")}
+                            style={{ width: 75, height: 30, marginRight: 10 }}
+                        />
+                    ),
+                    ...headerOptions,
+                }}
             />
         </MainStackNavigatorComponent.Navigator>
     );
@@ -44,7 +70,7 @@ export const AppTabNavigator = () => {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     if (route.name === "TabHome") {
-                        iconName = focused ? "home" : "home-outline";
+                        iconName = focused ? "football" : "football-outline";
                     } else if (route.name === "TabTeam") {
                         iconName = focused ? "body" : "body-outline";
                     }
@@ -62,7 +88,16 @@ export const AppTabNavigator = () => {
             <TabNavigator.Screen
                 name="TabTeam"
                 component={MyTeamScreen}
-                options={{ title: "Mon équipe", ...headerOptions }}
+                options={{
+                    title: "Mon équipe",
+                    headerRight: () => (
+                        <Image
+                            source={require("../assets/logoMPG.png")}
+                            style={{ width: 75, height: 30, marginRight: 10 }}
+                        />
+                    ),
+                    ...headerOptions,
+                }}
             />
         </TabNavigator.Navigator>
     );

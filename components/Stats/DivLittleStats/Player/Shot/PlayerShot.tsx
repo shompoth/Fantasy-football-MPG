@@ -15,15 +15,15 @@ function PlayerShot(props) {
                 secondary={props.percentageWonContest}
                 pourcentage={true}
             >
-                Duels remportés par match :
+                Duels remportés / match :
             </Parenthesis>
-            <Essential stat={props.foulsByMatch}>Fautes commises par match : </Essential>
+            <Essential stat={props.foulsByMatch}>Fautes commises / match : </Essential>
             <Parenthesis stat={props.sumGoals} secondary={props.sumPenalties}>
                 Buts (pén) :
             </Parenthesis>
             <Essential stat={props.minutesByGoal}>Fréquence de buts (min.) : </Essential>
-            <Essential stat={props.goalByMatch}>Buts par match : </Essential>
-            <Essential stat={props.shotByMatch}>Tirs par match : </Essential>
+            <Essential stat={props.goalByMatch}>Buts / match : </Essential>
+            <Essential stat={props.shotByMatch}>Tirs / match : </Essential>
             <Essential stat={props.sumBigChanceMissed}>
                 Grosses occasions manquées :
             </Essential>
@@ -35,18 +35,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 10,
     },
-    rowDiv: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        maxWidth: "100%",
-        paddingVertical: 2,
-    },
     detailProperty: {
         fontSize: 18,
         marginBottom: 5,
-    },
-    row: {
-        flexDirection: "row",
     },
 });
 

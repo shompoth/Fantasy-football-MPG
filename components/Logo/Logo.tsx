@@ -4,7 +4,7 @@ import { Image } from "react-native";
 
 const Logo = (props: any) => {
     // Variables
-    const logoStyles = {
+    let logoStyles = {
         width: props.dimensions.window.width * 0.4,
         height: props.dimensions.window.width * 0.15,
     };

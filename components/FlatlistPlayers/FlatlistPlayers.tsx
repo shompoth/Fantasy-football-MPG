@@ -39,9 +39,10 @@ const FlatlistPlayers = (props: any) => {
                     }}
                 /> */}
                 <Icon
-                    name={showPlusImage ? "add-circle" : "close-circle"}
+                    // name={showPlusImage ? "add-circle" : "close-circle"}
+                    name={showPlusImage ? "person-add" : "person-remove"}
                     color={showPlusImage ? Colors.success : Colors.danger}
-                    size={20}
+                    size={16}
                 />
             </>
         );

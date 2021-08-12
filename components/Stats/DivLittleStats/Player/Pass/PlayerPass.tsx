@@ -21,7 +21,7 @@ function PlayerPass(props) {
                 secondary={props.percentageSucceedPass}
                 pourcentage={true}
             >
-                Passes réussies par match :
+                Passes réussies / match :
             </Parenthesis>
 
             <Parenthesis
@@ -29,7 +29,7 @@ function PlayerPass(props) {
                 secondary={props.percentageAccuratePassBackZone}
                 pourcentage={true}
             >
-                Passes réussies dans son camp par match :
+                Passes réussies dans son camp / match :
             </Parenthesis>
 
             <Parenthesis
@@ -37,7 +37,7 @@ function PlayerPass(props) {
                 secondary={props.percentageAccurateLongPass}
                 pourcentage={true}
             >
-                Passes longues réussies par match :
+                Passes longues réussies / match :
             </Parenthesis>
 
             <Parenthesis
@@ -45,7 +45,7 @@ function PlayerPass(props) {
                 secondary={props.percentageCrossSuccess}
                 pourcentage={true}
             >
-                Centres réussis par match :
+                Centres réussis / match :
             </Parenthesis>
         </>
     );
@@ -55,18 +55,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 10,
     },
-    rowDiv: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        maxWidth: "100%",
-        paddingVertical: 2,
-    },
+
     detailProperty: {
         fontSize: 18,
         marginBottom: 5,
-    },
-    row: {
-        flexDirection: "row",
     },
 });
 

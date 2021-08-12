@@ -1173,7 +1173,7 @@ function Home(props: any) {
         >
             <View style={styles.container}>
                 <StatusBar style="auto" />
-                <Logo dimensions={dimensions} />
+                {/* <Logo dimensions={dimensions} /> */}
                 <SearchBar
                     constPlayers={constPlayers}
                     setPlayers={setPlayers}

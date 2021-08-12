@@ -11,17 +11,14 @@ function KeeperEfficient(props) {
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
             <Essential stat={props.goalsConcededByMatch}>
-                Buts encaissés par match :
+                Buts encaissés / match :
             </Essential>
             <Essential stat={props.sumCleanSheet}>Nombre de cleansheet :</Essential>
             <Essential stat={props.sumSaves}>Arrêts réalisés : </Essential>
             <Essential stat={props.sumDeflect}>Parades : </Essential>
             <Parenthesis
                 stat={props.sumPenaltySave}
-                secondary={
-                    props.sumPenaltySave / props.sumPenaltyFaced
-                    // (props.sumPenaltySave / props.sumPenaltyFaced).toFixed(3) * 100
-                }
+                secondary={props.sumPenaltySave / props.sumPenaltyFaced}
                 pourcentage={true}
             >
                 Pénaltys sauvés :

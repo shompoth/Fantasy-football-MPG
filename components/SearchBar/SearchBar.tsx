@@ -21,7 +21,6 @@ function SearchBar(props: any) {
     // Fonctions
     const searchPlayer = (text: string | null) => {
         if (text) {
-            // props.setActiveSearch(true);
             const newData = props.constPlayers.filter((item: any) => {
                 let itemData;
                 if (activeButtonName === buttonFilterName[0]) {
@@ -41,23 +40,15 @@ function SearchBar(props: any) {
             });
             props.setPlayers(newData);
             setSearch(text);
-            // !props.searchItemActivated && props.setSearchItemActivated(true);
-            // props.setSortPlayers(null);
         } else {
             setSearch(text);
-            // props.setSearchItemActivated(false);
             props.setPlayers(props.constPlayers);
-            // props.setPlayers(props.letPlayers);
         }
         props.setSortPlayers(null);
     };
 
     return (
         <View style={styles.containerSearchBar}>
-            {/* <Image
-                    style={styles.loupeStyle}
-                    source={require("../../assets/loupe.png")}
-                /> */}
             <View style={{ ...styles.divImage, paddingLeft: 5 }}>
                 <Icon name="search" color={Colors.grayHint} size={18} />
             </View>
