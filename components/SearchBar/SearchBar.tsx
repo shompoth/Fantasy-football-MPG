@@ -19,7 +19,7 @@ function SearchBar(props: any) {
     const [activeButtonName, setActiveButtonName] = useState<string>(buttonFilterName[0]);
 
     // Fonctions
-    const searchPlayer = (text: string | null) => {
+    const searchPlayerHandler = (text: string | null) => {
         if (text) {
             const newData = props.constPlayers.filter((item: any) => {
                 let itemData;
@@ -58,7 +58,8 @@ function SearchBar(props: any) {
                 value={search}
                 placeholder={activeButtonName}
                 underlineColorAndroid="transparent"
-                onChangeText={text => searchPlayer(text)}
+                onChangeText={text => searchPlayerHandler(text)}
+                autoCorrect={false}
             />
             <View
                 style={{
@@ -69,7 +70,7 @@ function SearchBar(props: any) {
             >
                 {search ? (
                     <TouchableOpacity
-                        onPress={() => searchPlayer(null)}
+                        onPress={() => searchPlayerHandler(null)}
                         activeOpacity={0.7}
                     >
                         <Icon

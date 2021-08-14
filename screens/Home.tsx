@@ -1056,7 +1056,7 @@ function Home(props: any) {
         return position!;
     };
 
-    const settingSort = (sort: string | null): void => {
+    const settingSortHandler = (sort: string | null): void => {
         const newPlayers = [...players];
         const newFixedPlayers = [...constPlayers];
 
@@ -1192,7 +1192,7 @@ function Home(props: any) {
                 >
                     {tableList.map(item => (
                         <TouchableOpacity
-                            onPress={() => settingSort(item)}
+                            onPress={() => settingSortHandler(item)}
                             activeOpacity={0.6}
                             style={{
                                 ...styles.listWrapper,
