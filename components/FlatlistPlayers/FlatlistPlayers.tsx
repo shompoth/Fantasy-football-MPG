@@ -15,41 +15,38 @@ import {
 
 import { Icon } from "../../UI";
 
+// Redux
+import { useDispatch } from "react-redux";
+import * as teamActions from "../../store/actions/team";
+
 const FlatlistPlayers = (props: any) => {
     // States
     const [showPlusImage, setShowPlusImage] = useState(true);
 
     // Variables
-    const plusImage = require("../../assets/plus.png");
-    const removeImage = require("../../assets/remove.png");
     const player = props.player.item;
+
+    // Variable redux
+    const dispatch = useDispatch();
 
     // Fonctions
     const renderImage = () => {
-        const sourceImage = showPlusImage ? plusImage : removeImage;
         return (
-            <>
-                {/* <Image
-                    source={sourceImage}
-                    style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: 17,
-                        width: 17,
-                    }}
-                /> */}
-                <Icon
-                    // name={showPlusImage ? "add-circle" : "close-circle"}
-                    name={showPlusImage ? "person-add" : "person-remove"}
-                    color={showPlusImage ? Colors.success : Colors.danger}
-                    size={16}
-                />
-            </>
+            <Icon
+                name={showPlusImage ? "person-add" : "person-remove"}
+                color={showPlusImage ? Colors.success : Colors.danger}
+                size={16}
+            />
         );
     };
 
-    const showAlert = () => {
+    const updatedTeamPlayerHandler = player => {
         setShowPlusImage(!showPlusImage);
+        if (showPlusImage) {
+            dispatch(teamActions.addInTeam(player));
+        } else {
+            dispatch(teamActions.removeInTeam(player.id));
+        }
         Alert.alert(
             player.firstname + " " + player.lastname,
             showPlusImage ? "rejoint votre équipe" : "quitte votre équipe",
@@ -67,7 +64,7 @@ const FlatlistPlayers = (props: any) => {
             <Text style={styles.row}>{props.playerPosition(player.ultraPosition)}</Text>
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.club}</Text>
             <Text style={styles.row}>{player.quotation}</Text>
-            <TouchableWithoutFeedback onPress={() => showAlert()}>
+            <TouchableWithoutFeedback onPress={() => updatedTeamPlayerHandler(player)}>
                 <View style={{ ...styles.row, flex: 0.3 }}>{renderImage()}</View>
             </TouchableWithoutFeedback>
         </View>

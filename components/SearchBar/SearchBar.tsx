@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "reac
 import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
 import { Icon } from "../../UI";
 
-function SearchBar(props: any) {
+function SearchBar(props) {
     // States
     const [search, setSearch] = useState<string | null>(null);
     const [buttonFilterName, setButtonFilterName] = useState<string[]>([
