@@ -10,46 +10,42 @@ import {
     Image,
     Alert,
     TouchableWithoutFeedback,
-    YellowBox,
 } from "react-native";
 
 import { Icon } from "../../UI";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../../store/actions/team";
 
-const FlatlistPlayers = (props: any) => {
-    // States
-    const [showPlusImage, setShowPlusImage] = useState(true);
-
-    // Variables
+const FlatlistPlayers = props => {
+    // Variable
     const player = props.player.item;
+    const team = useSelector(state => state.team.team);
 
     // Variable redux
     const dispatch = useDispatch();
 
     // Fonctions
-    const renderImage = () => {
+    const renderImage = player => {
         return (
             <Icon
-                name={showPlusImage ? "person-add" : "person-remove"}
-                color={showPlusImage ? Colors.success : Colors.danger}
+                name={team.includes(player) ? "person-remove" : "person-add"}
+                color={team.includes(player) ? Colors.danger : Colors.success}
                 size={16}
             />
         );
     };
 
     const updatedTeamPlayerHandler = player => {
-        setShowPlusImage(!showPlusImage);
-        if (showPlusImage) {
+        if (!team.includes(player)) {
             dispatch(teamActions.addInTeam(player));
         } else {
             dispatch(teamActions.removeInTeam(player.id));
         }
         Alert.alert(
             player.firstname + " " + player.lastname,
-            showPlusImage ? "rejoint votre équipe" : "quitte votre équipe",
+            team.includes(player) ? "quitte votre équipe" : "rejoint votre équipe",
         );
     };
 
@@ -57,7 +53,9 @@ const FlatlistPlayers = (props: any) => {
         <View
             style={{
                 ...styles.listWrapper,
-                backgroundColor: showPlusImage ? Colors.light : Colors.primaryLight,
+                backgroundColor: team.includes(player)
+                    ? Colors.primaryLight
+                    : Colors.light,
             }}
         >
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.lastname}</Text>
@@ -65,7 +63,7 @@ const FlatlistPlayers = (props: any) => {
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.club}</Text>
             <Text style={styles.row}>{player.quotation}</Text>
             <TouchableWithoutFeedback onPress={() => updatedTeamPlayerHandler(player)}>
-                <View style={{ ...styles.row, flex: 0.3 }}>{renderImage()}</View>
+                <View style={{ ...styles.row, flex: 0.3 }}>{renderImage(player)}</View>
             </TouchableWithoutFeedback>
         </View>
     );

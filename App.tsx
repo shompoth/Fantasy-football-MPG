@@ -5,11 +5,16 @@ import React from "react";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import teamReducer from "./store/reducers/team";
+import toogleIconPlayerReducer from "./store/reducers/toogleShowIconPlayer";
 
 // Composant
 import AppNavigator from "./navigation/AppNavigator";
 
-const rootReducer = teamReducer;
+const rootReducer = combineReducers({
+    team: teamReducer,
+    toogleIconPlayer: toogleIconPlayerReducer,
+});
+// teamReducer;
 
 const store = createStore(rootReducer);
 
