@@ -14,12 +14,11 @@ import * as teamActions from "../store/actions/team";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function MyTeam(props: any) {
-    // variable
+    // variables redux
     const team = useSelector(state =>
         state.team.team.sort((a, b) => (a.ultraPosition > b.ultraPosition ? 1 : -1)),
     );
 
-    // variable redux
     const dispatch = useDispatch();
 
     // Fonction
@@ -34,6 +33,13 @@ function MyTeam(props: any) {
                     data={team}
                     renderItem={player => (
                         <View style={styles.playerStyle}>
+                            <View style={{ marginRight: 5 }}>
+                                <Icon
+                                    name="person-circle-outline"
+                                    color={Colors.grayLowHint}
+                                    size={20}
+                                />
+                            </View>
                             <Text style={{ color: Colors.light }}>
                                 {player.item.lastname}
                             </Text>
@@ -100,6 +106,7 @@ const styles = StyleSheet.create({
         // width: 100,
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
         marginVertical: 5,
         marginHorizontal: 15,
     },

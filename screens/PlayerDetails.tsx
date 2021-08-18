@@ -1,6 +1,14 @@
 // Librairies
 import React, { useState, useEffect, FC } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    ActivityIndicator,
+    ScrollView,
+    TouchableOpacity,
+    Alert,
+} from "react-native";
 import Colors from "../constants/Colors";
 
 // Composants
@@ -13,10 +21,32 @@ import {
     PlayerPass,
     PlayerStrong,
 } from "../components";
+import { Icon } from "../UI";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import * as teamActions from "../store/actions/team";
 
 const PlayerDetails = props => {
     // Variables
     const player = props.route.params.player.item;
+    const team = useSelector(state => state.team.team);
+
+    const dispatch = useDispatch();
+
+    // Fonction
+    const updatedTeamPlayerHandler = player => {
+        if (!team.includes(player)) {
+            dispatch(teamActions.addInTeam(player));
+        } else {
+            dispatch(teamActions.removeInTeam(player.id));
+        }
+        Alert.alert(
+            player.firstname + " " + player.lastname,
+            team.includes(player) ? "quitte votre équipe" : "rejoint votre équipe",
+        );
+    };
+
     return (
         <View
             style={{
@@ -39,10 +69,32 @@ const PlayerDetails = props => {
                             width: "100%",
                         }}
                     >
-                        <View style={{ ...styles.presentationDiv, marginBottom: 15 }}>
-                            <Text style={styles.playerName}>
-                                {player.firstname} {player.lastname}
-                            </Text>
+                        <View style={styles.presentationDiv}>
+                            <View style={{ marginRight: 20 }}>
+                                <Text style={styles.playerName}>
+                                    {player.firstname} {player.lastname}
+                                </Text>
+                            </View>
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                onPress={() => updatedTeamPlayerHandler(player)}
+                            >
+                                <Icon
+                                    // name={"person-add-outline"}
+                                    // size={20}
+                                    name={
+                                        team.includes(player)
+                                            ? "person-remove"
+                                            : "person-add"
+                                    }
+                                    color={
+                                        team.includes(player)
+                                            ? Colors.danger
+                                            : Colors.secondary
+                                    }
+                                    size={18}
+                                ></Icon>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.divWrapperBigStats}>
@@ -240,11 +292,13 @@ const styles = StyleSheet.create({
     },
     presentationDiv: {
         flex: 1,
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         paddingVertical: 7,
         paddingBottom: 15,
         paddingHorizontal: 5,
+        marginBottom: 15,
     },
     playerName: {
         fontSize: 22,
