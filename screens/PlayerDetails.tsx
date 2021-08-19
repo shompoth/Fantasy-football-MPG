@@ -58,95 +58,113 @@ const PlayerDetails = props => {
             <View
                 style={{
                     ...styles.container,
-                    backgroundColor: Colors.primary,
+                    // backgroundColor: Colors.primary,
+                    // backgroundColor: Colors.gray,
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
                 }}
             >
                 <>
                     <View
                         style={{
-                            flexDirection: "row",
-                            justifyContent: "space-around",
+                            backgroundColor: Colors.gray,
                             width: "100%",
+                            borderRadius: 10,
+                            marginBottom: 10,
                         }}
                     >
-                        <View style={styles.presentationDiv}>
-                            <View style={{ marginRight: 20 }}>
-                                <Text style={styles.playerName}>
-                                    {player.firstname} {player.lastname}
-                                </Text>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-around",
+                                width: "100%",
+                            }}
+                        >
+                            <View style={styles.presentationDiv}>
+                                <View style={{ marginRight: 20 }}>
+                                    <Text style={styles.playerName}>
+                                        {player.firstname} {player.lastname}
+                                    </Text>
+                                </View>
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    onPress={() => updatedTeamPlayerHandler(player)}
+                                >
+                                    <Icon
+                                        name={
+                                            team.includes(player)
+                                                ? "person-remove"
+                                                : "person-add"
+                                        }
+                                        color={
+                                            team.includes(player)
+                                                ? Colors.danger
+                                                : Colors.success
+                                        }
+                                        size={18}
+                                    ></Icon>
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                onPress={() => updatedTeamPlayerHandler(player)}
-                            >
-                                <Icon
-                                    // name={"person-add-outline"}
-                                    // size={20}
-                                    name={
-                                        team.includes(player)
-                                            ? "person-remove"
-                                            : "person-add"
-                                    }
-                                    color={
-                                        team.includes(player)
-                                            ? Colors.danger
-                                            : Colors.secondary
-                                    }
-                                    size={18}
-                                ></Icon>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.divWrapperBigStats}>
-                        <MainStats stats={player.ultraPosition} position={true} />
-                        <MainStats stats={player.club} />
-                        <MainStats stats={player.birthDate} age={true} />
-                    </View>
-                    <View style={styles.mt20}>
-                        <View style={styles.divWrapperBigStats}>
-                            <BigStats stats={player.stats.avgRate}>Note moyenne</BigStats>
-                            {player.ultraPosition === 10 ? (
-                                <>
-                                    <BigStats stats={player.stats.sumCleanSheet}>
-                                        Clean Sheat
-                                    </BigStats>
-                                    <BigStats stats={player.stats.percentageSaveShot}>
-                                        % Sauvés
-                                    </BigStats>
-                                </>
-                            ) : (
-                                <>
-                                    <BigStats
-                                        stats={player.stats.sumGoals}
-                                        parenthesisStats={player.stats.sumPenalties}
-                                    >
-                                        Buts (pén.)
-                                    </BigStats>
-                                    <BigStats stats={player.stats.sumGoalAssist}>
-                                        Passe dé
-                                    </BigStats>
-                                </>
-                            )}
                         </View>
                         <View style={styles.divWrapperBigStats}>
-                            <BigStats stats={player.quotation}>Côte</BigStats>
-                            <BigStats
-                                stats={player.stats.appearances.starter}
-                                parenthesisStats={player.stats.appearances.standIn}
-                            >
-                                Titu (remp.)
-                            </BigStats>
+                            <MainStats stats={player.ultraPosition} position={true} />
+                            <MainStats stats={player.club} />
+                            <MainStats stats={player.birthDate} age={true} />
+                        </View>
+                        <View style={styles.mt20}>
+                            <View style={styles.divWrapperBigStats}>
+                                <BigStats stats={player.stats.avgRate}>Note moy</BigStats>
+                                {player.ultraPosition === 10 ? (
+                                    <>
+                                        <BigStats stats={player.stats.sumCleanSheet}>
+                                            Clean Sheat
+                                        </BigStats>
+                                        <BigStats stats={player.stats.percentageSaveShot}>
+                                            % Sauvés
+                                        </BigStats>
+                                    </>
+                                ) : (
+                                    <>
+                                        <BigStats
+                                            stats={player.stats.sumGoals}
+                                            parenthesisStats={player.stats.sumPenalties}
+                                        >
+                                            Buts (pén.)
+                                        </BigStats>
+                                        <BigStats stats={player.stats.sumGoalAssist}>
+                                            Passe dé
+                                        </BigStats>
+                                    </>
+                                )}
+                            </View>
+                            <View style={styles.divWrapperBigStats}>
+                                <BigStats stats={player.quotation}>Côte</BigStats>
+                                <BigStats
+                                    stats={player.stats.appearances.starter}
+                                    parenthesisStats={player.stats.appearances.standIn}
+                                >
+                                    Titu (remp.)
+                                </BigStats>
 
-                            <BigStats
-                                redCard={player.stats.sumRedCard}
-                                yellowCard={player.stats.sumYellowCard}
-                                card={true}
-                            >
-                                Cartons
-                            </BigStats>
+                                <BigStats
+                                    redCard={player.stats.sumRedCard}
+                                    yellowCard={player.stats.sumYellowCard}
+                                    card={true}
+                                >
+                                    Cartons
+                                </BigStats>
+                            </View>
                         </View>
                     </View>
-                    <ScrollView style={{ width: "90%" }}>
+                    <ScrollView
+                        style={{
+                            width: "100%",
+                            // paddingHorizontal: 10,
+                            paddingHorizontal: 5,
+
+                            backgroundColor: Colors.light,
+                        }}
+                    >
                         {player.ultraPosition === 10 ? (
                             <View style={styles.divWrapperLittleStats}>
                                 <KeeperEfficient
@@ -159,7 +177,23 @@ const PlayerDetails = props => {
                                     sumPenaltySave={player.stats.sumPenaltySave}
                                     sumPenaltyFaced={player.stats.sumPenaltyFaced}
                                 >
-                                    EFFICACE ?
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <View style={styles.mr5}>
+                                            <Icon
+                                                name={"rocket-outline"}
+                                                size={18}
+                                                color={Colors.success}
+                                            />
+                                        </View>
+                                        <Text style={styles.textMarginB18}>
+                                            EFFICACE ?
+                                        </Text>
+                                    </View>
                                 </KeeperEfficient>
                             </View>
                         ) : (
@@ -187,7 +221,18 @@ const PlayerDetails = props => {
                                             player.stats.percentageShotOnTarget
                                         }
                                     >
-                                        EFFICACE ?
+                                        <View style={styles.divRowCenter}>
+                                            <View style={styles.mr5}>
+                                                <Icon
+                                                    name={"rocket-outline"}
+                                                    size={18}
+                                                    color={Colors.success}
+                                                />
+                                            </View>
+                                            <Text style={styles.textMarginB18}>
+                                                EFFICACE ?
+                                            </Text>
+                                        </View>
                                     </PlayerEfficient>
                                 </View>
 
@@ -202,7 +247,18 @@ const PlayerDetails = props => {
                                             player.stats.sumBigChanceMissed
                                         }
                                     >
-                                        IL PLANTE ?
+                                        <View style={styles.divRowCenter}>
+                                            <View style={styles.mr5}>
+                                                <Icon
+                                                    name={"ribbon-outline"}
+                                                    size={18}
+                                                    color={Colors.success}
+                                                />
+                                            </View>
+                                            <Text style={styles.textMarginB18}>
+                                                IL PLANTE ?
+                                            </Text>
+                                        </View>
                                     </PlayerShot>
                                 </View>
 
@@ -237,7 +293,19 @@ const PlayerDetails = props => {
                                             player.stats.percentageCrossSuccess
                                         }
                                     >
-                                        UN AS DE LA PASSE ?
+                                        {/* UN AS DE LA PASSE ?*/}
+                                        <View style={styles.divRowCenter}>
+                                            <View style={styles.mr5}>
+                                                <Icon
+                                                    name={"resize-outline"}
+                                                    size={18}
+                                                    color={Colors.success}
+                                                />
+                                            </View>
+                                            <Text style={styles.textMarginB18}>
+                                                UN AS DE LA PASSE ?
+                                            </Text>
+                                        </View>
                                     </PlayerPass>
                                 </View>
 
@@ -250,7 +318,18 @@ const PlayerDetails = props => {
                                         }
                                         mistakeByMatch={player.stats.mistakeByMatch}
                                     >
-                                        SOLIDE ?
+                                        <View style={styles.divRowCenter}>
+                                            <View style={styles.mr5}>
+                                                <Icon
+                                                    name={"barbell-outline"}
+                                                    size={18}
+                                                    color={Colors.success}
+                                                />
+                                            </View>
+                                            <Text style={styles.textMarginB18}>
+                                                SOLIDE ?
+                                            </Text>
+                                        </View>
                                     </PlayerStrong>
                                 </View>
                             </>
@@ -266,9 +345,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        // paddingTop: 10,
-        // paddingBottom: 10,
-        paddingVertical: 5,
         backgroundColor: Colors.light,
         width: "100%",
     },
@@ -283,6 +359,15 @@ const styles = StyleSheet.create({
     divWrapperLittleStats: {
         justifyContent: "center",
         paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginVertical: 10,
+        backgroundColor: Colors.light,
+        elevation: 3,
+        shadowColor: Colors.grayHint,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 10,
+        shadowRadius: 3,
     },
     rowDiv: {
         flexDirection: "row",
@@ -298,7 +383,7 @@ const styles = StyleSheet.create({
         paddingVertical: 7,
         paddingBottom: 15,
         paddingHorizontal: 5,
-        marginBottom: 15,
+        marginBottom: 5,
     },
     playerName: {
         fontSize: 22,
@@ -330,6 +415,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
     },
+    textMarginB18: {
+        fontSize: 18,
+        marginBottom: 5,
+    },
     mt20: {
         marginVertical: 10,
     },
@@ -339,6 +428,10 @@ const styles = StyleSheet.create({
     detailProperty: {
         fontSize: 18,
         marginBottom: 5,
+    },
+    divRowCenter: {
+        flexDirection: "row",
+        justifyContent: "center",
     },
 });
 

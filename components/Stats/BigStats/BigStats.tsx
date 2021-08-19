@@ -29,7 +29,7 @@ function BigStats(props) {
                     </Text>
                 </View>
             ) : (
-                <Text style={styles.blueTextCenter20}>
+                <Text style={styles.blueTextCenter16}>
                     {props.stats}{" "}
                     {props.parenthesisStats && `(${props.parenthesisStats})`}
                 </Text>
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
     },
-    blueTextCenter20: {
-        fontSize: 20,
+    blueTextCenter16: {
+        fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
         color: Colors.secondary,
-        marginTop: 5,
+        marginTop: 3,
     },
     row: {
         flexDirection: "row",

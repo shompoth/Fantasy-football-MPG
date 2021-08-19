@@ -73,13 +73,18 @@ function MyTeam(props: any) {
                     <Text style={{ textAlign: "center" }}>
                         Vous n'avez aucun joueur dans votre équipe. {"\n"}
                     </Text>
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         onPress={() => props.navigation.navigate("TabHome")}
+                        activeOpacity={0.8}
+                        style={{
+                            backgroundColor: Colors.secondary,
+                            paddingVertical: 5,
+                            paddingHorizontal: 10,
+                            borderRadius: 10,
+                        }}
                     >
-                        <Text style={{ color: Colors.secondary }}>
-                            Ajouter des joueurs
-                        </Text>
-                    </TouchableWithoutFeedback>
+                        <Text style={styles.textAddPlayer}>Ajouter des joueurs</Text>
+                    </TouchableOpacity>
                 </View>
             )}
         </View>
@@ -120,6 +125,9 @@ const styles = StyleSheet.create({
     rowMargin: {
         flexDirection: "row",
         // margin: 5,
+    },
+    textAddPlayer: {
+        color: Colors.light,
     },
 });
 

@@ -1,6 +1,7 @@
 //Librairies
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import Colors from "../../../constants/Colors";
 
 function MainStats(props) {
     // Fonction
@@ -34,7 +35,7 @@ function MainStats(props) {
     };
     return (
         <View style={styles.presentationDiv}>
-            <Text style={styles.textCenter18}>
+            <Text style={styles.textCenter16}>
                 {props.position ? playerPosition(props.stats) : props.stats}{" "}
                 {props.age && "ans"}
             </Text>
@@ -47,13 +48,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingVertical: 7,
-        paddingBottom: 15,
+        // paddingBottom: 35,
         paddingHorizontal: 5,
     },
 
-    textCenter18: {
+    textCenter16: {
         fontSize: 18,
         textAlign: "center",
+        color: Colors.secondary,
+        fontWeight: "bold",
     },
 });
 

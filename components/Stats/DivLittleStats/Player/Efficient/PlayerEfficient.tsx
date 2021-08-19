@@ -50,10 +50,6 @@ function PlayerEfficient(props) {
     );
 }
 const styles = StyleSheet.create({
-    divWrapperLittleStats: {
-        justifyContent: "center",
-        paddingVertical: 10,
-    },
     detailProperty: {
         fontSize: 18,
         marginBottom: 5,

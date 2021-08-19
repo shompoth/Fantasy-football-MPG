@@ -18,7 +18,7 @@ function KeeperEfficient(props) {
             <Essential stat={props.sumDeflect}>Parades : </Essential>
             <Parenthesis
                 stat={props.sumPenaltySave}
-                secondary={props.sumPenaltySave / props.sumPenaltyFaced}
+                secondary={(props.sumPenaltySave / props.sumPenaltyFaced) * 100}
                 pourcentage={true}
             >
                 Pénaltys sauvés :
