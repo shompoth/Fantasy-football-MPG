@@ -11,3 +11,4 @@ export { default as Parenthesis } from "./Stats/DivLittleStats/ComponentLittleSt
 export { default as SearchBar } from "./SearchBar/SearchBar";
 export { default as Logo } from "./Logo/Logo";
 export { default as FlatlistPlayers } from "./FlatlistPlayers/FlatlistPlayers";
+export { default as PlayerTeam } from "./PlayerTeam/PlayerTeam";

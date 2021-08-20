@@ -3,10 +3,15 @@ import React, { useState, useEffect } from "react";
 import Colors from "../constants/Colors";
 
 // Composants
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from "react-native";
-import { Link } from "@react-navigation/native";
-import { Logo, SearchBar, FlatlistPlayers } from "../components";
-import { Icon } from "../UI";
+import {
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+    TouchableOpacity,
+    ImageBackground,
+} from "react-native";
+import { PlayerTeam } from "../components";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +21,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 function MyTeam(props: any) {
     // variables redux
     const team = useSelector(state =>
-        state.team.team.sort((a, b) => (a.ultraPosition > b.ultraPosition ? 1 : -1)),
+        state.team.team.sort((a, b) => (b.ultraPosition > a.ultraPosition ? 1 : -1)),
     );
 
     const dispatch = useDispatch();
@@ -29,38 +34,36 @@ function MyTeam(props: any) {
     return (
         <View style={styles.container}>
             {team.length ? (
-                <FlatList
-                    data={team}
-                    renderItem={player => (
-                        <View style={styles.playerStyle}>
-                            <View style={{ marginRight: 5 }}>
-                                <Icon
-                                    name="person-circle-outline"
-                                    color={Colors.grayLowHint}
-                                    size={20}
+                <ImageBackground
+                    source={require("../assets/field.png")}
+                    style={{
+                        height: "100%",
+                        width: "100%",
+                    }}
+                >
+                    <View
+                        style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "flex-end",
+                            paddingVertical: 15,
+                        }}
+                    >
+                        <FlatList
+                            data={team}
+                            renderItem={player => (
+                                <PlayerTeam
+                                    deletePlayerTeamHandler={deletePlayerTeamHandler}
+                                    playerId={player.item.id}
+                                    playerLastname={player.item.lastname}
                                 />
-                            </View>
-                            <Text style={{ color: Colors.light }}>
-                                {player.item.lastname}
-                            </Text>
-                            <TouchableOpacity
-                                style={styles.iconStyle}
-                                onPress={() => deletePlayerTeamHandler(player.item.id)}
-                                activeOpacity={0.8}
-                            >
-                                <Icon
-                                    name="close-circle"
-                                    color={Colors.danger}
-                                    size={18}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    keyExtractor={player => player.id.toString()}
-                    // style={{
-                    //     width: "100%",
-                    // }}
-                />
+                            )}
+                            keyExtractor={player => player.id.toString()}
+                            style={{ maxWidth: 150 }}
+                        />
+                    </View>
+                </ImageBackground>
             ) : (
                 <View
                     style={{
@@ -98,30 +101,30 @@ const styles = StyleSheet.create({
         // width: "95%",
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 10,
-        paddingBottom: 20,
+        // paddingTop: 10,
+        // paddingBottom: 20,
         backgroundColor: Colors.light,
     },
-    playerStyle: {
-        borderWidth: 1,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        backgroundColor: Colors.secondary,
-        borderRadius: 10,
-        // width: 100,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 5,
-        marginHorizontal: 15,
-    },
-    iconStyle: {
-        position: "absolute",
-        right: 0,
-        top: 0,
-        // transform: translate("-50%", "-50%"),
-        transform: [{ translateX: "12%" }, { translateY: "-8%" }],
-    },
+    // playerStyle: {
+    //     borderWidth: 1,
+    //     paddingVertical: 5,
+    //     paddingHorizontal: 10,
+    //     backgroundColor: Colors.secondary,
+    //     borderRadius: 10,
+    //     // width: 100,
+    //     flexDirection: "row",
+    //     justifyContent: "space-between",
+    //     alignItems: "center",
+    //     marginVertical: 5,
+    //     marginHorizontal: 15,
+    // },
+    // iconStyle: {
+    //     position: "absolute",
+    //     right: 0,
+    //     top: 0,
+    //     // transform: translate("-50%", "-50%"),
+    //     transform: [{ translateX: "12%" }, { translateY: "-8%" }],
+    // },
     rowMargin: {
         flexDirection: "row",
         // margin: 5,
