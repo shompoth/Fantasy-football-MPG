@@ -18,6 +18,16 @@ import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
+// Enum
+enum PositionJoueur {
+    Attaquant = 40,
+    MilieuOffensif = 32,
+    MilieuDefensif = 31,
+    Lateraux = 21,
+    Defenseur = 20,
+    Gardien = 10,
+}
+
 function MyTeam(props: any) {
     // variables redux
     const team = useSelector(state =>
@@ -43,6 +53,109 @@ function MyTeam(props: any) {
                 >
                     <View
                         style={{
+                            paddingVertical: 15,
+                            flex: 1,
+                        }}
+                    >
+                        <View
+                            style={{
+                                flex: 5,
+                                ...styles.divPlayerPosition,
+                            }}
+                        >
+                            {/* <View style={{ flexDirection: "row" }}> */}
+                            {team
+                                .filter(
+                                    player =>
+                                        player.ultraPosition === PositionJoueur.Attaquant,
+                                )
+                                .map(player => (
+                                    <PlayerTeam
+                                        deletePlayerTeamHandler={deletePlayerTeamHandler}
+                                        playerId={player.id}
+                                        playerLastname={player.lastname}
+                                    />
+                                ))}
+                            {/* </View> */}
+                        </View>
+
+                        <View
+                            style={{
+                                flex: 5,
+                                ...styles.divPlayerPosition,
+                            }}
+                        >
+                            <View style={{ flexDirection: "row" }}>
+                                {team
+                                    .filter(
+                                        player =>
+                                            player.ultraPosition ===
+                                                PositionJoueur.MilieuDefensif ||
+                                            player.ultraPosition ===
+                                                PositionJoueur.MilieuOffensif,
+                                    )
+                                    .map(player => (
+                                        <PlayerTeam
+                                            deletePlayerTeamHandler={
+                                                deletePlayerTeamHandler
+                                            }
+                                            playerId={player.id}
+                                            playerLastname={player.lastname}
+                                        />
+                                    ))}
+                            </View>
+                        </View>
+
+                        <View
+                            style={{
+                                flex: 5,
+                                ...styles.divPlayerPosition,
+                            }}
+                        >
+                            <View style={{ flexDirection: "row" }}>
+                                {team
+                                    .filter(
+                                        player =>
+                                            player.ultraPosition ===
+                                                PositionJoueur.Defenseur ||
+                                            player.ultraPosition ===
+                                                PositionJoueur.Lateraux,
+                                    )
+                                    .map(player => (
+                                        <PlayerTeam
+                                            deletePlayerTeamHandler={
+                                                deletePlayerTeamHandler
+                                            }
+                                            playerId={player.id}
+                                            playerLastname={player.lastname}
+                                        />
+                                    ))}
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, ...styles.divPlayerPosition }}>
+                            <View style={{ flexDirection: "row" }}>
+                                {team
+                                    .filter(
+                                        player =>
+                                            player.ultraPosition ===
+                                            PositionJoueur.Gardien,
+                                    )
+                                    .map(player => (
+                                        <PlayerTeam
+                                            deletePlayerTeamHandler={
+                                                deletePlayerTeamHandler
+                                            }
+                                            playerId={player.id}
+                                            playerLastname={player.lastname}
+                                        />
+                                    ))}
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* <View
+                        style={{
                             flex: 1,
                             flexDirection: "row",
                             justifyContent: "center",
@@ -62,7 +175,7 @@ function MyTeam(props: any) {
                             keyExtractor={player => player.id.toString()}
                             style={{ maxWidth: 150 }}
                         />
-                    </View>
+                    </View> */}
                 </ImageBackground>
             ) : (
                 <View
@@ -105,26 +218,13 @@ const styles = StyleSheet.create({
         // paddingBottom: 20,
         backgroundColor: Colors.light,
     },
-    // playerStyle: {
-    //     borderWidth: 1,
-    //     paddingVertical: 5,
-    //     paddingHorizontal: 10,
-    //     backgroundColor: Colors.secondary,
-    //     borderRadius: 10,
-    //     // width: 100,
-    //     flexDirection: "row",
-    //     justifyContent: "space-between",
-    //     alignItems: "center",
-    //     marginVertical: 5,
-    //     marginHorizontal: 15,
-    // },
-    // iconStyle: {
-    //     position: "absolute",
-    //     right: 0,
-    //     top: 0,
-    //     // transform: translate("-50%", "-50%"),
-    //     transform: [{ translateX: "12%" }, { translateY: "-8%" }],
-    // },
+    divPlayerPosition: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
+    },
     rowMargin: {
         flexDirection: "row",
         // margin: 5,
