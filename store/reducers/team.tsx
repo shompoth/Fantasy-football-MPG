@@ -1,4 +1,5 @@
 import { ADD_IN_TEAM, REMOVE_IN_TEAM } from "../actions/team";
+import { Alert } from "react-native";
 
 const initialState = {
     team: [
@@ -166,10 +167,18 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case ADD_IN_TEAM:
-            return {
-                ...state,
-                team: [action.storePlayer, ...state.team],
-            };
+            if (state.team.length === 18) {
+                Alert.alert(
+                    "Attention",
+                    "Vous ne pouvez pas avoir plus de 18 joueurs dans votre équipe",
+                );
+                return state;
+            } else {
+                return {
+                    ...state,
+                    team: [action.storePlayer, ...state.team],
+                };
+            }
 
         case REMOVE_IN_TEAM:
             const removePlayer = state.team.filter(

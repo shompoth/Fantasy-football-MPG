@@ -63,7 +63,6 @@ function MyTeam(props: any) {
                                 ...styles.divPlayerPosition,
                             }}
                         >
-                            {/* <View style={{ flexDirection: "row" }}> */}
                             {team
                                 .filter(
                                     player =>
@@ -85,25 +84,21 @@ function MyTeam(props: any) {
                                 ...styles.divPlayerPosition,
                             }}
                         >
-                            <View style={{ flexDirection: "row" }}>
-                                {team
-                                    .filter(
-                                        player =>
-                                            player.ultraPosition ===
-                                                PositionJoueur.MilieuDefensif ||
-                                            player.ultraPosition ===
-                                                PositionJoueur.MilieuOffensif,
-                                    )
-                                    .map(player => (
-                                        <PlayerTeam
-                                            deletePlayerTeamHandler={
-                                                deletePlayerTeamHandler
-                                            }
-                                            playerId={player.id}
-                                            playerLastname={player.lastname}
-                                        />
-                                    ))}
-                            </View>
+                            {team
+                                .filter(
+                                    player =>
+                                        player.ultraPosition ===
+                                            PositionJoueur.MilieuDefensif ||
+                                        player.ultraPosition ===
+                                            PositionJoueur.MilieuOffensif,
+                                )
+                                .map(player => (
+                                    <PlayerTeam
+                                        deletePlayerTeamHandler={deletePlayerTeamHandler}
+                                        playerId={player.id}
+                                        playerLastname={player.lastname}
+                                    />
+                                ))}
                         </View>
 
                         <View
@@ -112,45 +107,40 @@ function MyTeam(props: any) {
                                 ...styles.divPlayerPosition,
                             }}
                         >
-                            <View style={{ flexDirection: "row" }}>
-                                {team
-                                    .filter(
-                                        player =>
-                                            player.ultraPosition ===
-                                                PositionJoueur.Defenseur ||
-                                            player.ultraPosition ===
-                                                PositionJoueur.Lateraux,
-                                    )
-                                    .map(player => (
-                                        <PlayerTeam
-                                            deletePlayerTeamHandler={
-                                                deletePlayerTeamHandler
-                                            }
-                                            playerId={player.id}
-                                            playerLastname={player.lastname}
-                                        />
-                                    ))}
-                            </View>
+                            {team
+                                .filter(
+                                    player =>
+                                        player.ultraPosition ===
+                                            PositionJoueur.Defenseur ||
+                                        player.ultraPosition === PositionJoueur.Lateraux,
+                                )
+                                .map(player => (
+                                    <PlayerTeam
+                                        deletePlayerTeamHandler={deletePlayerTeamHandler}
+                                        playerId={player.id}
+                                        playerLastname={player.lastname}
+                                    />
+                                ))}
                         </View>
 
-                        <View style={{ flex: 1, ...styles.divPlayerPosition }}>
-                            <View style={{ flexDirection: "row" }}>
-                                {team
-                                    .filter(
-                                        player =>
-                                            player.ultraPosition ===
-                                            PositionJoueur.Gardien,
-                                    )
-                                    .map(player => (
-                                        <PlayerTeam
-                                            deletePlayerTeamHandler={
-                                                deletePlayerTeamHandler
-                                            }
-                                            playerId={player.id}
-                                            playerLastname={player.lastname}
-                                        />
-                                    ))}
-                            </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                ...styles.divPlayerPosition,
+                            }}
+                        >
+                            {team
+                                .filter(
+                                    player =>
+                                        player.ultraPosition === PositionJoueur.Gardien,
+                                )
+                                .map(player => (
+                                    <PlayerTeam
+                                        deletePlayerTeamHandler={deletePlayerTeamHandler}
+                                        playerId={player.id}
+                                        playerLastname={player.lastname}
+                                    />
+                                ))}
                         </View>
                     </View>
 

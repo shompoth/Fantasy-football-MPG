@@ -37,16 +37,22 @@ const FlatlistPlayers = props => {
         );
     };
 
+    // CHECK HERE ----------------------------------------------------------
     const updatedTeamPlayerHandler = player => {
         if (!team.includes(player)) {
             dispatch(teamActions.addInTeam(player));
         } else {
             dispatch(teamActions.removeInTeam(player.id));
         }
-        Alert.alert(
-            player.firstname + " " + player.lastname,
-            team.includes(player) ? "quitte votre équipe" : "rejoint votre équipe",
-        );
+        console.log(team.length);
+        if (
+            (team.length < 18 && !team.includes(player)) ||
+            (team.length < 19 && team.includes(player))
+        )
+            Alert.alert(
+                player.firstname + " " + player.lastname,
+                team.includes(player) ? "quitte votre équipe" : "rejoint votre équipe",
+            );
     };
 
     return (
