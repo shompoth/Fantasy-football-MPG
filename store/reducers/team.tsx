@@ -167,6 +167,13 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case ADD_IN_TEAM:
+            // if (state.team.filter(player => player.ultraPosition === 10).length === 3) {
+            //     Alert.alert(
+            //         "Attention",
+            //         "Vous ne pouvez pas avoir plus de 3 gardiens dans votre équipe",
+            //     );
+            //     return state;
+            // }
             if (state.team.length === 18) {
                 Alert.alert(
                     "Attention",

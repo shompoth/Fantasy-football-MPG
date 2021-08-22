@@ -39,12 +39,23 @@ const FlatlistPlayers = props => {
 
     // CHECK HERE ----------------------------------------------------------
     const updatedTeamPlayerHandler = player => {
+        // variable
+        const countMaxThreeKeeper =
+            team.filter(player => player.ultraPosition === 10).length === 3;
+
+        if (countMaxThreeKeeper && player.ultraPosition === 10) {
+            Alert.alert(
+                "Attention",
+                "Vous ne pouvez pas avoir plus de 3 gardiens dans votre équipe",
+            );
+            return;
+        }
         if (!team.includes(player)) {
             dispatch(teamActions.addInTeam(player));
         } else {
             dispatch(teamActions.removeInTeam(player.id));
         }
-        console.log(team.length);
+
         if (
             (team.length < 18 && !team.includes(player)) ||
             (team.length < 19 && team.includes(player))
