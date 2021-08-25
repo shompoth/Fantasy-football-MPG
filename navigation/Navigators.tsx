@@ -82,7 +82,6 @@ export const AppTabNavigator = () => {
             <TabNavigator.Screen
                 name="TabHome"
                 component={MainStackNavigator}
-                // component={HomeScreen}
                 options={{ title: "Joueurs", headerShown: false }}
             />
             <TabNavigator.Screen

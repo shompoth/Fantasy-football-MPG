@@ -12,7 +12,14 @@ import {
     TouchableHighlight,
 } from "react-native";
 
-function ButtonSelectFilterName(props: any) {
+// Interface
+interface ButtonSelectFilterNameProps {
+    children: string;
+    activeButtonName: string;
+    setActiveButtonName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ButtonSelectFilterName: React.FC<ButtonSelectFilterNameProps> = props => {
     // Variable
     let activeClassName;
     if (props.children === props.activeButtonName) {
@@ -36,7 +43,7 @@ function ButtonSelectFilterName(props: any) {
             </View>
         </TouchableHighlight>
     );
-}
+};
 
 const styles = StyleSheet.create({
     button: {

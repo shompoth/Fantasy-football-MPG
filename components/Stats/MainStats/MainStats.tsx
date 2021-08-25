@@ -3,9 +3,20 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../../constants/Colors";
 
-function MainStats(props) {
+// interface
+interface MainStatsProps {
+    stats: number | string;
+    position?: boolean;
+    age?: boolean;
+}
+
+interface playerPositionFunction {
+    arg1: number;
+}
+
+const MainStats: React.FC<MainStatsProps> = props => {
     // Fonction
-    const playerPosition = ultraPosition => {
+    const playerPosition = (ultraPosition: number | string) => {
         let position;
 
         switch (ultraPosition) {
@@ -33,6 +44,7 @@ function MainStats(props) {
         }
         return position;
     };
+
     return (
         <View style={styles.presentationDiv}>
             <Text style={styles.textCenter16}>
@@ -41,7 +53,7 @@ function MainStats(props) {
             </Text>
         </View>
     );
-}
+};
 const styles = StyleSheet.create({
     presentationDiv: {
         flex: 1,

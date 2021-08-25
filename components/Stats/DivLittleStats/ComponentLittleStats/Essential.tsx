@@ -3,14 +3,20 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../../../constants/Colors";
 
-function Essential(props) {
+// Interface
+interface EssentialProps {
+    children: string;
+    stat: number | undefined;
+}
+
+const Essential: React.FC<EssentialProps> = props => {
     return (
         <View style={styles.rowDiv}>
             <Text>{props.children}</Text>
             <Text style={styles.blueColor}>{props.stat}</Text>
         </View>
     );
-}
+};
 const styles = StyleSheet.create({
     rowDiv: {
         flexDirection: "row",

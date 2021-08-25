@@ -8,7 +8,16 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "reac
 import ButtonSelectFilterName from "./ButtonSelectFilterName/ButtonSelectFilterName";
 import { Icon } from "../../UI";
 
-function SearchBar(props) {
+// Interface
+import { PlayerState } from "../../screens/Home";
+interface SearchBarProps {
+    constPlayers: PlayerState[];
+    setPlayers: React.Dispatch<React.SetStateAction<PlayerState[]>>;
+    playerPosition: (arg: number) => string;
+    setSortPlayers: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const SearchBar: React.FC<SearchBarProps> = props => {
     // States
     const [search, setSearch] = useState<string | null>(null);
     const [buttonFilterName, setButtonFilterName] = useState<string[]>([
@@ -94,7 +103,7 @@ function SearchBar(props) {
             ))}
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     containerSearchBar: {

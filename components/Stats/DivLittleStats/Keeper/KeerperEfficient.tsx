@@ -6,7 +6,17 @@ import { Text, StyleSheet } from "react-native";
 import Essential from "../ComponentLittleStats/Essential";
 import Parenthesis from "../ComponentLittleStats/Parenthesis";
 
-function KeeperEfficient(props) {
+// Interface
+interface KeeperEfficientProps {
+    goalsConcededByMatch: number | undefined;
+    sumCleanSheet: number;
+    sumSaves: number;
+    sumDeflect: number;
+    sumPenaltySave: number;
+    sumPenaltyFaced: number;
+}
+
+const KeeperEfficient: React.FC<KeeperEfficientProps> = props => {
     return (
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
@@ -25,7 +35,7 @@ function KeeperEfficient(props) {
             </Parenthesis>
         </>
     );
-}
+};
 const styles = StyleSheet.create({
     rowDiv: {
         flexDirection: "row",

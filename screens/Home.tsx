@@ -34,9 +34,70 @@ import { Logo, SearchBar, FlatlistPlayers } from "../components";
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
-function Home(props: any) {
-    //Variable
+export interface PlayerState {
+    lastname: string;
+    ultraPosition: number;
+    club: string;
+    quotation: number;
+    id: number;
+    firstname: string;
+    birthDate: number;
+    stats: {
+        avgRate: number;
+        sumGoals: number;
+        sumPenalties: number;
+        sumGoalAssists: number;
+        appearances: {
+            starter: number;
+            standIn: number;
+        };
+        sumRedCard: number;
+        sumYellowCard: number;
+        wonContestByMatch: number;
+        percentageWonContest: number;
+        wonDuelByMatch: number;
+        percentageWonDuel: number;
+        lostBallByMatch: number;
+        percentageLostBall: number;
+        foulsByMatch: number;
+        foulsEnduredByMatch: number;
+        percentageShotOnTarget: number;
+        shotOnTargetByMatch: number;
+        minutesByGoal: number;
+        goalByMatch: number;
+        shotByMatch: number;
+        sumBigChanceMissed: number;
+        sumBigChanceCreated: number;
+        succeedPassByMatch: number;
+        percentageSucceedPass: number;
+        succeedPassBackZoneByMatch: number;
+        percentageAccuratePassBackZone?: number;
+        percentageAccurateLongPass: number;
+        succeedCrossByMatch: number;
+        percentageCrossSuccess: number;
+        succeedLongPassByMatch: number;
 
+        interceptByMatch: number;
+        tackleByMatch: number;
+        goalsConcededByMatch: number;
+        mistakeByMatch: number;
+
+        goalConcede?: number;
+        sumCleanSheet?: number;
+        sumSaves?: number;
+        sumDeflect?: number;
+        sumPenaltySave?: number;
+        sumPenaltyFaced?: number;
+        percentageSaveShot?: number;
+    };
+}
+
+// export interface WindowProps {
+//     window: ScaledSize;
+//     screen: ScaledSize;
+// }
+
+const Home: React.FC = props => {
     // States
     const [dimensions, setDimensions] = useState({ window, screen });
 
@@ -53,7 +114,7 @@ function Home(props: any) {
         "",
     ]);
 
-    const [players, setPlayers] = useState([
+    const [players, setPlayers] = useState<PlayerState[]>([
         {
             lastname: "Mbappe",
             ultraPosition: 40,
@@ -66,7 +127,7 @@ function Home(props: any) {
                 avgRate: 10,
                 sumGoals: 28,
                 sumPenalties: 10,
-                sumGoalAssist: 10,
+                sumGoalAssists: 10,
                 appearances: {
                     starter: 40,
                     standIn: 2,
@@ -112,6 +173,7 @@ function Home(props: any) {
             quotation: 20,
             id: 1,
             firstname: "Stéphane",
+            birthDate: 33,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -169,6 +231,7 @@ function Home(props: any) {
             quotation: 40,
             id: 2,
             firstname: "Houssem",
+            birthDate: 24,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -225,7 +288,7 @@ function Home(props: any) {
                 avgRate: 10,
                 sumGoals: 28,
                 sumPenalties: 10,
-                sumGoalAssist: 10,
+                sumGoalAssists: 10,
                 appearances: {
                     starter: 40,
                     standIn: 2,
@@ -271,6 +334,7 @@ function Home(props: any) {
             quotation: 27,
             id: 3090,
             firstname: "Youcef",
+            birthDate: 26,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -322,12 +386,12 @@ function Home(props: any) {
             quotation: 17,
             id: 0,
             firstname: "Jimmy",
-            birthDate: 22,
+            birthDate: 32,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
                 sumPenalties: 10,
-                sumGoalAssist: 10,
+                sumGoalAssists: 10,
                 appearances: {
                     starter: 40,
                     standIn: 2,
@@ -373,6 +437,7 @@ function Home(props: any) {
             quotation: 40,
             id: 293,
             firstname: "Tanguy",
+            birthDate: 26,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -424,6 +489,7 @@ function Home(props: any) {
             quotation: 15,
             id: 1342,
             firstname: "Benjamin",
+            birthDate: 34,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -481,6 +547,7 @@ function Home(props: any) {
             quotation: 21,
             id: 4,
             firstname: "Keny",
+            birthDate: 26,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -532,6 +599,7 @@ function Home(props: any) {
             quotation: 23,
             id: 2202,
             firstname: "Valentin",
+            birthDate: 30,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -583,6 +651,7 @@ function Home(props: any) {
             quotation: 27,
             id: 3,
             firstname: "Bensebaini",
+            birthDate: 23,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -634,6 +703,7 @@ function Home(props: any) {
             quotation: 17,
             id: 5,
             firstname: "Steve",
+            birthDate: 33,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -685,6 +755,7 @@ function Home(props: any) {
             quotation: 35,
             id: 6,
             firstname: "Nicolas",
+            birthDate: 22,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -736,6 +807,7 @@ function Home(props: any) {
             quotation: 30,
             id: 7,
             firstname: "Jonathan",
+            birthDate: 20,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -787,6 +859,7 @@ function Home(props: any) {
             quotation: 10,
             id: 132,
             firstname: "Lucas",
+            birthDate: 21,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -844,6 +917,7 @@ function Home(props: any) {
             quotation: 15,
             id: 100,
             firstname: "Steve",
+            birthDate: 32,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -901,6 +975,7 @@ function Home(props: any) {
             quotation: 17,
             id: 8,
             firstname: "Ruben",
+            birthDate: 34,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -952,6 +1027,7 @@ function Home(props: any) {
             quotation: 30,
             id: 999,
             firstname: "Florian",
+            birthDate: 25,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -1003,6 +1079,7 @@ function Home(props: any) {
             quotation: 45,
             id: 9,
             firstname: "Thiago",
+            birthDate: 32,
             stats: {
                 avgRate: 10,
                 sumGoals: 28,
@@ -1048,8 +1125,8 @@ function Home(props: any) {
             },
         },
     ]);
-    const [constPlayers, setConstPlayers]: any = useState([...players]);
-    const [letPlayers, setLetPlayers]: any = useState([...players]);
+    const [constPlayers, setConstPlayers] = useState([...players]);
+    const [letPlayers, setLetPlayers] = useState([...players]);
 
     const [sortPlayers, setSortPlayers] = useState<string | null>(null);
 
@@ -1074,7 +1151,7 @@ function Home(props: any) {
     });
 
     // Fonctions
-    const onChange: any = ({ window, screen }) => {
+    const onChange = ({ window, screen }) => {
         setDimensions({ window, screen });
     };
 
@@ -1111,7 +1188,6 @@ function Home(props: any) {
         const newPlayers = [...players];
         const newFixedPlayers = [...constPlayers];
 
-        // if (!searchItemActivated) {
         if (sort === tableList[0]) {
             if (sortPlayers === "alphaDescending") {
                 setSortPlayers("alphaAscending");
@@ -1230,7 +1306,6 @@ function Home(props: any) {
                     setPlayers={setPlayers}
                     playerPosition={playerPosition}
                     setSortPlayers={setSortPlayers}
-                    letPlayers={letPlayers}
                 />
                 <View
                     style={{
@@ -1300,17 +1375,10 @@ function Home(props: any) {
                         width: "100%",
                     }}
                 />
-                {/* <SearchBar
-                    constPlayers={constPlayers}
-                    setPlayers={setPlayers}
-                    playerPosition={playerPosition}
-                    setSortPlayers={setSortPlayers}
-                    letPlayers={letPlayers}
-                /> */}
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

@@ -1,13 +1,32 @@
 //Librairies
-import React from "react";
+import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 
 // Composants
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+// import Draggable from "react-draggable";
 import { Icon } from "../../UI";
 
-function PlayerTeam(props) {
+// Interface
+interface PlayerTeamProps {
+    playerLastname: string;
+    playerId: number;
+    deletePlayerTeamHandler: (arg: number) => void;
+}
+
+const PlayerTeam: React.FC<PlayerTeamProps> = props => {
+    // States
+    const [left, setLeft] = useState(100);
+    const [top, setTop] = useState(100);
+
+    // Function
+    // const handleDrag = (deltaX: number, deltaY: number) => {
+    //     setLeft(left + deltaX);
+    //     setTop(top + deltaY);
+    // };
+
     return (
+        // <Draggable left={left} top={top} onDrag={handleDrag}>
         <View style={styles.playerStyle}>
             <View style={{ marginRight: 5 }}>
                 <Icon name="person-circle-outline" color={Colors.grayLowHint} size={20} />
@@ -23,8 +42,9 @@ function PlayerTeam(props) {
                 <Icon name="close-circle" color={Colors.danger} size={16} />
             </TouchableOpacity>
         </View>
+        // </Draggable>
     );
-}
+};
 const styles = StyleSheet.create({
     playerStyle: {
         borderWidth: 1,

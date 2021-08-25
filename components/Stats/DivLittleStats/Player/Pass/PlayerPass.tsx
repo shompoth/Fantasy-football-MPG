@@ -6,14 +6,28 @@ import { Text, StyleSheet } from "react-native";
 import Essential from "../../ComponentLittleStats/Essential";
 import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
-function PlayerPass(props) {
+// Interface
+interface PlayerPassProps {
+    sumGoalAssist: number;
+    sumBigChanceCreated: number;
+    succeedPassByMatch: number;
+    percentageSucceedPass: number;
+    succeedPassBackZoneByMatch: number;
+    percentageAccuratePassBackZone: number | undefined;
+    succeedLongPassByMatch: number;
+    percentageAccurateLongPass: number;
+    succeedCrossByMatch: number;
+    percentageCrossSuccess: number;
+}
+
+const PlayerPass: React.FC<PlayerPassProps> = props => {
     return (
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
 
             <Essential stat={props.sumGoalAssist}>Passes décisives : </Essential>
             <Essential stat={props.sumBigChanceCreated}>
-                Grosses occasions créées :{" "}
+                Grosses occasions créées :
             </Essential>
 
             <Parenthesis
@@ -49,7 +63,7 @@ function PlayerPass(props) {
             </Parenthesis>
         </>
     );
-}
+};
 const styles = StyleSheet.create({
     detailProperty: {
         fontSize: 18,

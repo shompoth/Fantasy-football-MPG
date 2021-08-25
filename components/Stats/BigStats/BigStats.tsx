@@ -3,7 +3,17 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../../constants/Colors";
 
-function BigStats(props) {
+// Interface
+interface BigStatsProps {
+    children: string;
+    card: boolean;
+    redCard: number;
+    yellowCard: number;
+    stats: number;
+    parenthesisStats: number;
+}
+
+const BigStats: React.FC<BigStatsProps> = props => {
     return (
         <View style={styles.presentationDiv}>
             <Text style={styles.textCenter16}>{props.children}</Text>
@@ -36,7 +46,7 @@ function BigStats(props) {
             )}
         </View>
     );
-}
+};
 const styles = StyleSheet.create({
     presentationDiv: {
         flex: 1,

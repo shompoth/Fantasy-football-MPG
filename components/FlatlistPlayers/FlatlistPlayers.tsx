@@ -1,5 +1,5 @@
 // Librairies
-import React, { useState } from "react";
+import React from "react";
 import Colors from "../../constants/Colors";
 
 // Composants
@@ -14,20 +14,30 @@ import {
 
 import { Icon } from "../../UI";
 
+// Interface
+import { PlayerState } from "../../screens/Home";
+
+interface FlatlistPlayerProps {
+    player: {
+        item: PlayerState;
+    };
+    playerPosition: (arg: number) => string;
+}
+
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../../store/actions/team";
 
-const FlatlistPlayers = props => {
+const FlatlistPlayers: React.FC<FlatlistPlayerProps> = props => {
     // Variable
     const player = props.player.item;
-    const team = useSelector(state => state.team.team);
 
     // Variable redux
+    const team: PlayerState[] = useSelector(state => state.team.team);
     const dispatch = useDispatch();
 
     // Fonctions
-    const renderImage = player => {
+    const renderImage = (player: PlayerState) => {
         return (
             <Icon
                 name={team.includes(player) ? "person-remove" : "person-add"}
@@ -38,10 +48,11 @@ const FlatlistPlayers = props => {
     };
 
     // CHECK HERE ----------------------------------------------------------
-    const updatedTeamPlayerHandler = player => {
+    const updatedTeamPlayerHandler = (player: PlayerState) => {
         // variable
         const countMaxThreeKeeper =
-            team.filter(player => player.ultraPosition === 10).length === 3;
+            team.filter((player: PlayerState) => player.ultraPosition === 10).length ===
+            3;
 
         if (countMaxThreeKeeper && player.ultraPosition === 10) {
             Alert.alert(

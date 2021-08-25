@@ -6,7 +6,21 @@ import { Text, StyleSheet } from "react-native";
 import Essential from "../../ComponentLittleStats/Essential";
 import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
-function PlayerEfficient(props) {
+// Interface
+interface PlayerEfficientProps {
+    wonContestByMatch: number;
+    percentageWonContest: number;
+    wonDuelByMatch: number;
+    percentageWonDuel: number;
+    lostBallByMatch: number;
+    percentageLostBall: number;
+    foulsByMatch: number;
+    foulsEnduredByMatch: number;
+    shotOnTargetByMatch: number;
+    percentageShotOnTarget: number;
+}
+
+const PlayerEfficient: React.FC<PlayerEfficientProps> = props => {
     return (
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
@@ -44,11 +58,11 @@ function PlayerEfficient(props) {
                 secondary={props.percentageShotOnTarget}
                 pourcentage={true}
             >
-                Tirs cadrés / match :{" "}
+                Tirs cadrés / match :
             </Parenthesis>
         </>
     );
-}
+};
 const styles = StyleSheet.create({
     detailProperty: {
         fontSize: 18,

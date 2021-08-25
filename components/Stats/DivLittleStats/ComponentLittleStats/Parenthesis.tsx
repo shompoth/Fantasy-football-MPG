@@ -3,7 +3,15 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../../../constants/Colors";
 
-function Parenthesis(props) {
+// Interface
+interface ParenthesisProps {
+    children: string;
+    stat: number;
+    secondary: number | undefined;
+    pourcentage?: boolean;
+}
+
+const Parenthesis: React.FC<ParenthesisProps> = props => {
     return (
         <View style={styles.rowDiv}>
             <Text>{props.children}</Text>
@@ -18,7 +26,7 @@ function Parenthesis(props) {
             </View>
         </View>
     );
-}
+};
 const styles = StyleSheet.create({
     row: {
         flexDirection: "row",

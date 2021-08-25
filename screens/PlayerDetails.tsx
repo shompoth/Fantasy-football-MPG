@@ -22,23 +22,25 @@ import {
     PlayerStrong,
 } from "../components";
 import { Icon } from "../UI";
+import { PlayerState } from "./Home";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
 
-const PlayerDetails = props => {
+const PlayerDetails: React.FC = props => {
     // Variables
-    const player = props.route.params.player.item;
+    const player: PlayerState = props.route.params.player.item;
     const team = useSelector(state => state.team.team);
 
     const dispatch = useDispatch();
 
     // Fonction
-    const updatedTeamPlayerHandler = player => {
+    const updatedTeamPlayerHandler = (player: PlayerState) => {
         // variable
         const countMaxThreeKeeper =
-            team.filter(player => player.ultraPosition === 10).length === 3;
+            team.filter((player: PlayerState) => player.ultraPosition === 10).length ===
+            3;
 
         if (countMaxThreeKeeper && player.ultraPosition === 10) {
             Alert.alert(
@@ -73,8 +75,6 @@ const PlayerDetails = props => {
             <View
                 style={{
                     ...styles.container,
-                    // backgroundColor: Colors.primary,
-                    // backgroundColor: Colors.gray,
                     paddingHorizontal: 10,
                     paddingVertical: 5,
                 }}
@@ -146,7 +146,7 @@ const PlayerDetails = props => {
                                         >
                                             Buts (pén.)
                                         </BigStats>
-                                        <BigStats stats={player.stats.sumGoalAssist}>
+                                        <BigStats stats={player.stats.sumGoalAssists}>
                                             Passe dé
                                         </BigStats>
                                     </>
@@ -279,7 +279,7 @@ const PlayerDetails = props => {
 
                                 <View style={styles.divWrapperLittleStats}>
                                     <PlayerPass
-                                        sumGoalAssist={player.stats.sumGoalAssist}
+                                        sumGoalAssist={player.stats.sumGoalAssists}
                                         sumBigChanceCreated={
                                             player.stats.sumBigChanceCreated
                                         }

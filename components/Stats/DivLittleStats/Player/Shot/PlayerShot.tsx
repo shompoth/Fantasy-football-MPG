@@ -6,18 +6,20 @@ import { Text, StyleSheet } from "react-native";
 import Essential from "../../ComponentLittleStats/Essential";
 import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
-function PlayerShot(props) {
+// Interface
+interface PlayerShotProps {
+    sumGoals: number;
+    sumPenalties: number;
+    minutesByGoal: number;
+    goalByMatch: number;
+    shotByMatch: number;
+    sumBigChanceMissed: number;
+}
+
+const PlayerShot: React.FC<PlayerShotProps> = props => {
     return (
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
-            <Parenthesis
-                stat={props.wonContestByMatch}
-                secondary={props.percentageWonContest}
-                pourcentage={true}
-            >
-                Duels remportés / match :
-            </Parenthesis>
-            <Essential stat={props.foulsByMatch}>Fautes commises / match : </Essential>
             <Parenthesis stat={props.sumGoals} secondary={props.sumPenalties}>
                 Buts (pén) :
             </Parenthesis>
@@ -29,7 +31,7 @@ function PlayerShot(props) {
             </Essential>
         </>
     );
-}
+};
 const styles = StyleSheet.create({
     detailProperty: {
         fontSize: 18,

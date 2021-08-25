@@ -12,11 +12,11 @@ import {
     ImageBackground,
 } from "react-native";
 import { PlayerTeam } from "../components";
+import { PlayerState } from "./Home";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 // Enum
 enum PositionJoueur {
@@ -28,17 +28,23 @@ enum PositionJoueur {
     Gardien = 10,
 }
 
-function MyTeam(props: any) {
+const MyTeam: React.FC = props => {
     // variables redux
-    const team = useSelector(state =>
-        state.team.team.sort((a, b) => (b.ultraPosition > a.ultraPosition ? 1 : -1)),
+    const team: PlayerState[] = useSelector(state =>
+        state.team.team.sort((a: PlayerState, b: PlayerState) =>
+            b.ultraPosition > a.ultraPosition ? 1 : -1,
+        ),
     );
 
     const dispatch = useDispatch();
 
     // Fonction
-    const deletePlayerTeamHandler = id => {
+    const deletePlayerTeamHandler = (id: PlayerState) => {
         dispatch(teamActions.removeInTeam(id));
+    };
+
+    const navigationHandler = () => {
+        props.navigation.navigate("TabHome");
     };
 
     return (
@@ -70,12 +76,12 @@ function MyTeam(props: any) {
                                 )
                                 .map(player => (
                                     <PlayerTeam
+                                        key={player.id}
                                         deletePlayerTeamHandler={deletePlayerTeamHandler}
                                         playerId={player.id}
                                         playerLastname={player.lastname}
                                     />
                                 ))}
-                            {/* </View> */}
                         </View>
 
                         <View
@@ -94,6 +100,7 @@ function MyTeam(props: any) {
                                 )
                                 .map(player => (
                                     <PlayerTeam
+                                        key={player.id}
                                         deletePlayerTeamHandler={deletePlayerTeamHandler}
                                         playerId={player.id}
                                         playerLastname={player.lastname}
@@ -116,6 +123,7 @@ function MyTeam(props: any) {
                                 )
                                 .map(player => (
                                     <PlayerTeam
+                                        key={player.id}
                                         deletePlayerTeamHandler={deletePlayerTeamHandler}
                                         playerId={player.id}
                                         playerLastname={player.lastname}
@@ -136,6 +144,7 @@ function MyTeam(props: any) {
                                 )
                                 .map(player => (
                                     <PlayerTeam
+                                        key={player.id}
                                         deletePlayerTeamHandler={deletePlayerTeamHandler}
                                         playerId={player.id}
                                         playerLastname={player.lastname}
@@ -143,29 +152,6 @@ function MyTeam(props: any) {
                                 ))}
                         </View>
                     </View>
-
-                    {/* <View
-                        style={{
-                            flex: 1,
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            paddingVertical: 15,
-                        }}
-                    >
-                        <FlatList
-                            data={team}
-                            renderItem={player => (
-                                <PlayerTeam
-                                    deletePlayerTeamHandler={deletePlayerTeamHandler}
-                                    playerId={player.item.id}
-                                    playerLastname={player.item.lastname}
-                                />
-                            )}
-                            keyExtractor={player => player.id.toString()}
-                            style={{ maxWidth: 150 }}
-                        />
-                    </View> */}
                 </ImageBackground>
             ) : (
                 <View
@@ -180,7 +166,8 @@ function MyTeam(props: any) {
                         Vous n'avez aucun joueur dans votre équipe. {"\n"}
                     </Text>
                     <TouchableOpacity
-                        onPress={() => props.navigation.navigate("TabHome")}
+                        // onPress={() => props.navigation.navigate("TabHome")}
+                        onPress={() => navigationHandler()}
                         activeOpacity={0.8}
                         style={{
                             backgroundColor: Colors.secondary,
@@ -195,7 +182,7 @@ function MyTeam(props: any) {
             )}
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

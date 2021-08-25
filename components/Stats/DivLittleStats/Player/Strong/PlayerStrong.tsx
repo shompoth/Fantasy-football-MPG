@@ -4,9 +4,16 @@ import { Text, StyleSheet } from "react-native";
 
 // Composants
 import Essential from "../../ComponentLittleStats/Essential";
-import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
-function PlayerStrong(props) {
+// Interface
+interface PlayerStrongProps {
+    interceptByMatch: number;
+    tackleByMatch: number;
+    goalsConcededByMatch: number;
+    mistakeByMatch: number;
+}
+
+const PlayerStrong: React.FC<PlayerStrongProps> = props => {
     return (
         <>
             <Text style={styles.detailProperty}>{props.children}</Text>
@@ -20,7 +27,7 @@ function PlayerStrong(props) {
             </Essential>
         </>
     );
-}
+};
 const styles = StyleSheet.create({
     detailProperty: {
         fontSize: 18,
