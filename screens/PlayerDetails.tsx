@@ -1,5 +1,5 @@
 // Librairies
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -8,8 +8,11 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
+    LogBox,
 } from "react-native";
 import Colors from "../constants/Colors";
+
+LogBox.ignoreLogs(["Non-serializable values were found in the navigation state"]);
 
 // Composants
 import {

@@ -21,6 +21,7 @@ import {
 } from "react-native";
 
 import { Logo, SearchBar, FlatlistPlayers } from "../components";
+import axios from "axios";
 
 // Enum
 // enum TableList {
@@ -1150,6 +1151,18 @@ const Home: React.FC = props => {
         };
     });
 
+    // useEffect(() => {
+    //     axios
+    //         .post(
+    //             "https://mpg-t-290dd-default-rtdb.europe-west1.firebasedatabase.app/players.json",
+    //             players,
+    //         )
+    //         .then(response => {
+    //             console.log(response);
+    //         })
+    //         .catch(error => console.log(error));
+    // }, []);
+
     // Fonctions
     const onChange = ({ window, screen }) => {
         setDimensions({ window, screen });
@@ -1309,11 +1322,9 @@ const Home: React.FC = props => {
                 />
                 <View
                     style={{
-                        // marginTop: 10,
                         paddingHorizontal: 10,
                         borderRadius: 5,
                         flexDirection: "row",
-                        // backgroundColor: Colors.gray,
                     }}
                 >
                     {tableList.map(item => (
@@ -1324,9 +1335,7 @@ const Home: React.FC = props => {
                                 ...styles.listWrapper,
                                 paddingHorizontal: 0,
                                 borderBottomWidth: 0,
-
                                 flex: flexItem(item),
-                                // flex: item === "Joueurs" || item === "Club" ? 1.1 : 1,
                             }}
                             key={item}
                         >
@@ -1362,7 +1371,6 @@ const Home: React.FC = props => {
                                 });
                             }}
                             activeOpacity={0.7}
-                            // underlayColor="rgba(91, 196, 69, 0.7)"
                         >
                             <FlatlistPlayers
                                 player={player}
