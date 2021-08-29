@@ -11,8 +11,8 @@ import { Icon } from "../../UI";
 // Interface
 import { PlayerState } from "../../screens/Home";
 interface SearchBarProps {
-    constPlayers: PlayerState[];
-    setPlayers: React.Dispatch<React.SetStateAction<PlayerState[]>>;
+    constPlayers: PlayerState[] | null;
+    setPlayers: React.Dispatch<React.SetStateAction<PlayerState[] | null>>;
     playerPosition: (arg: number) => string;
     setSortPlayers: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -29,8 +29,8 @@ const SearchBar: React.FC<SearchBarProps> = props => {
 
     // Fonctions
     const searchPlayerHandler = (text: string | null) => {
-        if (text) {
-            const newData = props.constPlayers.filter((item: any) => {
+        if (text && props.constPlayers) {
+            const newData = props.constPlayers.filter((item: PlayerState) => {
                 let itemData;
                 if (activeButtonName === buttonFilterName[0]) {
                     itemData = item.lastname
@@ -45,7 +45,9 @@ const SearchBar: React.FC<SearchBarProps> = props => {
                 }
 
                 const textData = text.toUpperCase();
-                return itemData.indexOf(textData) > -1;
+                if (itemData) {
+                    return itemData.indexOf(textData) > -1;
+                }
             });
             props.setPlayers(newData);
             setSearch(text);

@@ -1,6 +1,8 @@
 // Librairies
 import React, { useState, useEffect } from "react";
 import Colors from "../constants/Colors";
+import { NavigationProp } from "@react-navigation/native";
+// import { StackNavigationProp } from "@react-navigation/stack";
 // import axios from "axios";
 
 // Composants
@@ -10,17 +12,12 @@ import {
     Text,
     View,
     FlatList,
-    Image,
     Dimensions,
-    SafeAreaView,
-    TouchableHighlight,
     TouchableOpacity,
     ActivityIndicator,
-    TextProps,
-    TextInput,
 } from "react-native";
 
-import { Logo, SearchBar, FlatlistPlayers } from "../components";
+import { SearchBar, FlatlistPlayers } from "../components";
 import axios from "axios";
 
 // Enum
@@ -41,7 +38,7 @@ export interface PlayerState {
     club: string;
     quotation: number;
     id: number;
-    firstname: string;
+    firstname?: string;
     birthDate: number;
     stats: {
         avgRate: number;
@@ -54,36 +51,35 @@ export interface PlayerState {
         };
         sumRedCard: number;
         sumYellowCard: number;
-        wonContestByMatch: number;
-        percentageWonContest: number;
-        wonDuelByMatch: number;
-        percentageWonDuel: number;
-        lostBallByMatch: number;
-        percentageLostBall: number;
-        foulsByMatch: number;
-        foulsEnduredByMatch: number;
-        percentageShotOnTarget: number;
-        shotOnTargetByMatch: number;
-        minutesByGoal: number;
-        goalByMatch: number;
-        shotByMatch: number;
-        sumBigChanceMissed: number;
-        sumBigChanceCreated: number;
-        succeedPassByMatch: number;
-        percentageSucceedPass: number;
-        succeedPassBackZoneByMatch: number;
+        wonContestByMatch?: number;
+        percentageWonContest?: number;
+        wonDuelByMatch?: number;
+        percentageWonDuel?: number;
+        lostBallByMatch?: number;
+        percentageLostBall?: number;
+        foulsByMatch?: number;
+        foulsEnduredByMatch?: number;
+        percentageShotOnTarget?: number;
+        shotOnTargetByMatch?: number;
+        minutesByGoal?: number;
+        goalByMatch?: number;
+        shotByMatch?: number;
+        sumBigChanceMissed?: number;
+        sumBigChanceCreated?: number;
+        succeedPassByMatch?: number;
+        percentageSucceedPass?: number;
+        succeedPassBackZoneByMatch?: number;
         percentageAccuratePassBackZone?: number;
-        percentageAccurateLongPass: number;
-        succeedCrossByMatch: number;
-        percentageCrossSuccess: number;
-        succeedLongPassByMatch: number;
+        percentageAccurateLongPass?: number;
+        succeedCrossByMatch?: number;
+        percentageCrossSuccess?: number;
+        succeedLongPassByMatch?: number;
 
-        interceptByMatch: number;
-        tackleByMatch: number;
-        goalsConcededByMatch: number;
-        mistakeByMatch: number;
+        interceptByMatch?: number;
+        tackleByMatch?: number;
+        goalsConcededByMatch?: number;
+        mistakeByMatch?: number;
 
-        goalConcede?: number;
         sumCleanSheet?: number;
         sumSaves?: number;
         sumDeflect?: number;
@@ -115,1058 +111,2434 @@ const Home: React.FC = props => {
         "",
     ]);
 
-    const [players, setPlayers] = useState<PlayerState[]>([
-        {
-            lastname: "Mbappe",
-            ultraPosition: 40,
-            club: "PSG",
-            quotation: 50,
-            id: 12345,
-            firstname: "Kylian",
-            birthDate: 22,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                shotOnTargetByMatch: 10,
-                percentageShotOnTarget: 70,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Ruffier",
-            ultraPosition: 10,
-            club: "St-Etienne",
-            quotation: 20,
-            id: 1,
-            firstname: "Stéphane",
-            birthDate: 33,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-                // GOALKEEPER
-                goalConcede: 19,
-                sumCleanSheet: 10,
-                sumSaves: 13,
-                sumDeflect: 4,
-                sumPenaltySave: 2,
-                sumPenaltyFaced: 5,
-            },
-        },
-        {
-            lastname: "Aouar",
-            ultraPosition: 32,
-            club: "Lyon",
-            quotation: 40,
-            id: 2,
-            firstname: "Houssem",
-            birthDate: 24,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    // const [players, setPlayers] = useState<PlayerState[]>([
+    //     {
+    //         lastname: "Mbappe",
+    //         ultraPosition: 40,
+    //         club: "PSG",
+    //         quotation: 50,
+    //         id: 1,
+    //         firstname: "Kylian",
+    //         birthDate: 22,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Cavani",
-            ultraPosition: 40,
-            club: "PSG",
-            quotation: 35,
-            id: 203,
-            firstname: "Edinson",
-            birthDate: 30,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                shotOnTargetByMatch: 10,
-                percentageShotOnTarget: 70,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Atal",
-            ultraPosition: 21,
-            club: "Nice",
-            quotation: 27,
-            id: 3090,
-            firstname: "Youcef",
-            birthDate: 26,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             shotOnTargetByMatch: 10,
+    //             percentageShotOnTarget: 70,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Briand",
-            ultraPosition: 40,
-            club: "Bordeaux",
-            quotation: 17,
-            id: 0,
-            firstname: "Jimmy",
-            birthDate: 32,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                shotOnTargetByMatch: 10,
-                percentageShotOnTarget: 70,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Ndombele",
-            ultraPosition: 32,
-            club: "Lyon",
-            quotation: 40,
-            id: 293,
-            firstname: "Tanguy",
-            birthDate: 26,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Lecomte",
-            ultraPosition: 10,
-            club: "Montpellier",
-            quotation: 15,
-            id: 1342,
-            firstname: "Benjamin",
-            birthDate: 34,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-                // GOALKEEPER
-                goalConcede: 19,
-                sumCleanSheet: 10,
-                sumSaves: 13,
-                sumDeflect: 4,
-                sumPenaltySave: 2,
-                sumPenaltyFaced: 5,
-            },
-        },
-        {
-            lastname: "Lala",
-            ultraPosition: 21,
-            club: "Strasbourg",
-            quotation: 21,
-            id: 4,
-            firstname: "Keny",
-            birthDate: 26,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Rongier",
-            ultraPosition: 32,
-            club: "Lyon",
-            quotation: 23,
-            id: 2202,
-            firstname: "Valentin",
-            birthDate: 30,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Ruffier",
+    //         ultraPosition: 10,
+    //         club: "St-Etienne",
+    //         quotation: 20,
+    //         id: 2,
+    //         firstname: "Stéphane",
+    //         birthDate: 33,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Rami",
-            ultraPosition: 21,
-            club: "Rennes",
-            quotation: 27,
-            id: 3,
-            firstname: "Bensebaini",
-            birthDate: 23,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Aouar",
+    //         ultraPosition: 32,
+    //         club: "Lyon",
+    //         quotation: 40,
+    //         id: 3,
+    //         firstname: "Houssem",
+    //         birthDate: 24,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Savanier",
-            ultraPosition: 31,
-            club: "Nimes",
-            quotation: 17,
-            id: 5,
-            firstname: "Steve",
-            birthDate: 33,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Pepe",
-            ultraPosition: 40,
-            club: "Lille",
-            quotation: 35,
-            id: 6,
-            firstname: "Nicolas",
-            birthDate: 22,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Ikone",
-            ultraPosition: 32,
-            club: "Lille",
-            quotation: 30,
-            id: 7,
-            firstname: "Jonathan",
-            birthDate: 20,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Lima",
-            ultraPosition: 10,
-            club: "Nantes",
-            quotation: 10,
-            id: 132,
-            firstname: "Lucas",
-            birthDate: 21,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-                // GOALKEEPER
-                goalConcede: 19,
-                sumCleanSheet: 10,
-                sumSaves: 13,
-                sumDeflect: 4,
-                sumPenaltySave: 2,
-                sumPenaltyFaced: 5,
-            },
-        },
-        {
-            lastname: "Mandanda",
-            ultraPosition: 10,
-            club: "Marseille",
-            quotation: 15,
-            id: 100,
-            firstname: "Steve",
-            birthDate: 32,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-                // GOALKEEPER
-                goalConcede: 19,
-                sumCleanSheet: 10,
-                sumSaves: 13,
-                sumDeflect: 4,
-                sumPenaltySave: 2,
-                sumPenaltyFaced: 5,
-            },
-        },
-        {
-            lastname: "Fonte",
-            ultraPosition: 20,
-            club: "Lille",
-            quotation: 17,
-            id: 8,
-            firstname: "Ruben",
-            birthDate: 34,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Cavani",
+    //         ultraPosition: 40,
+    //         club: "PSG",
+    //         quotation: 35,
+    //         id: 4,
+    //         firstname: "Edinson",
+    //         birthDate: 30,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Thauvin",
-            ultraPosition: 32,
-            club: "Marseille",
-            quotation: 30,
-            id: 999,
-            firstname: "Florian",
-            birthDate: 25,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             shotOnTargetByMatch: 10,
+    //             percentageShotOnTarget: 70,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-        {
-            lastname: "Silva",
-            ultraPosition: 20,
-            club: "PSG",
-            quotation: 45,
-            id: 9,
-            firstname: "Thiago",
-            birthDate: 32,
-            stats: {
-                avgRate: 10,
-                sumGoals: 28,
-                sumPenalties: 10,
-                sumGoalAssists: 10,
-                appearances: {
-                    starter: 40,
-                    standIn: 2,
-                },
-                sumRedCard: 0,
-                sumYellowCard: 2,
-                // Efficace
-                wonContestByMatch: 10,
-                percentageWonContest: 1,
-                wonDuelByMatch: 3,
-                percentageWonDuel: 10,
-                lostBallByMatch: 4,
-                percentageLostBall: 29,
-                foulsByMatch: 3,
-                foulsEnduredByMatch: 10,
-                percentageShotOnTarget: 70,
-                shotOnTargetByMatch: 10,
-                // PLANTE ?
-                minutesByGoal: 39,
-                goalByMatch: 1,
-                shotByMatch: 5,
-                sumBigChanceMissed: 3,
-                // AS DE LA PASSE
-                sumBigChanceCreated: 4,
-                succeedPassByMatch: 29,
-                percentageSucceedPass: 80,
-                succeedPassBackZoneByMatch: 16,
-                percentageAccurateLongPass: 50,
-                succeedCrossByMatch: 3,
-                percentageCrossSuccess: 59,
-                succeedLongPassByMatch: 4,
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
 
-                // SOLIDE ?
-                interceptByMatch: 3,
-                tackleByMatch: 7,
-                goalsConcededByMatch: 1,
-                mistakeByMatch: 0,
-            },
-        },
-    ]);
-    const [constPlayers, setConstPlayers] = useState([...players]);
-    const [letPlayers, setLetPlayers] = useState([...players]);
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Atal",
+    //         ultraPosition: 21,
+    //         club: "Nice",
+    //         quotation: 27,
+    //         id: 5,
+    //         firstname: "Youcef",
+    //         birthDate: 26,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Briand",
+    //         ultraPosition: 40,
+    //         club: "Bordeaux",
+    //         quotation: 17,
+    //         id: 6,
+    //         firstname: "Jimmy",
+    //         birthDate: 32,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             shotOnTargetByMatch: 10,
+    //             percentageShotOnTarget: 70,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Ndombele",
+    //         ultraPosition: 32,
+    //         club: "Lyon",
+    //         quotation: 40,
+    //         id: 7,
+    //         firstname: "Tanguy",
+    //         birthDate: 26,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Lecomte",
+    //         ultraPosition: 10,
+    //         club: "Montpellier",
+    //         quotation: 15,
+    //         id: 8,
+    //         firstname: "Benjamin",
+    //         birthDate: 34,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Lala",
+    //         ultraPosition: 21,
+    //         club: "Strasbourg",
+    //         quotation: 21,
+    //         id: 9,
+    //         firstname: "Keny",
+    //         birthDate: 26,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Rongier",
+    //         ultraPosition: 32,
+    //         club: "Lyon",
+    //         quotation: 23,
+    //         id: 10,
+    //         firstname: "Valentin",
+    //         birthDate: 30,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Rami",
+    //         ultraPosition: 21,
+    //         club: "Rennes",
+    //         quotation: 27,
+    //         id: 11,
+    //         firstname: "Bensebaini",
+    //         birthDate: 23,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Savanier",
+    //         ultraPosition: 31,
+    //         club: "Nimes",
+    //         quotation: 17,
+    //         id: 12,
+    //         firstname: "Steve",
+    //         birthDate: 33,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Pepe",
+    //         ultraPosition: 40,
+    //         club: "Lille",
+    //         quotation: 35,
+    //         id: 13,
+    //         firstname: "Nicolas",
+    //         birthDate: 22,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Ikone",
+    //         ultraPosition: 32,
+    //         club: "Lille",
+    //         quotation: 30,
+    //         id: 14,
+    //         firstname: "Jonathan",
+    //         birthDate: 20,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Lima",
+    //         ultraPosition: 10,
+    //         club: "Nantes",
+    //         quotation: 10,
+    //         id: 15,
+    //         firstname: "Lucas",
+    //         birthDate: 21,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Mandanda",
+    //         ultraPosition: 10,
+    //         club: "Marseille",
+    //         quotation: 15,
+    //         id: 16,
+    //         firstname: "Steve",
+    //         birthDate: 32,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Fonte",
+    //         ultraPosition: 20,
+    //         club: "Lille",
+    //         quotation: 17,
+    //         id: 17,
+    //         firstname: "Ruben",
+    //         birthDate: 34,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Thauvin",
+    //         ultraPosition: 32,
+    //         club: "Marseille",
+    //         quotation: 30,
+    //         id: 18,
+    //         firstname: "Florian",
+    //         birthDate: 25,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Silva",
+    //         ultraPosition: 20,
+    //         club: "PSG",
+    //         quotation: 45,
+    //         id: 19,
+    //         firstname: "Thiago",
+    //         birthDate: 32,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Di Maria",
+    //         ultraPosition: 40,
+    //         club: "PSG",
+    //         quotation: 35,
+    //         id: 20,
+    //         firstname: "Angel",
+    //         birthDate: 31,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Ben Arfa",
+    //         ultraPosition: 20,
+    //         club: "Rennes",
+    //         quotation: 32,
+    //         id: 21,
+    //         firstname: "Hatem",
+    //         birthDate: 25,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Depay",
+    //         ultraPosition: 20,
+    //         club: "Lyon",
+    //         quotation: 35,
+    //         id: 22,
+    //         firstname: "Memphis",
+    //         birthDate: 23,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Mendes",
+    //         ultraPosition: 31,
+    //         club: "Lille",
+    //         quotation: 20,
+    //         id: 23,
+    //         firstname: "Thiago",
+    //         birthDate: 28,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Marcelo",
+    //         ultraPosition: 20,
+    //         club: "Lyon",
+    //         quotation: 15,
+    //         id: 24,
+    //         birthDate: 34,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Marquinhos",
+    //         ultraPosition: 20,
+    //         club: "PSG",
+    //         quotation: 40,
+    //         id: 25,
+    //         birthDate: 27,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Saint-Maximin",
+    //         ultraPosition: 32,
+    //         club: "Lille",
+    //         quotation: 30,
+    //         id: 26,
+    //         firstname: "Allan",
+    //         birthDate: 24,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Gradel",
+    //         ultraPosition: 32,
+    //         club: "Toulouse",
+    //         quotation: 17,
+    //         id: 27,
+    //         firstname: "Max-Alain",
+    //         birthDate: 33,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Ocampos",
+    //         ultraPosition: 32,
+    //         club: "Marseille",
+    //         quotation: 25,
+    //         id: 28,
+    //         firstname: "Lucas",
+    //         birthDate: 27,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Aguilar",
+    //         ultraPosition: 21,
+    //         club: "Monaco",
+    //         quotation: 15,
+    //         id: 29,
+    //         firstname: "Ruben",
+    //         birthDate: 28,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Cabella",
+    //         ultraPosition: 32,
+    //         club: "Saint-Etienne",
+    //         quotation: 23,
+    //         id: 30,
+    //         firstname: "Remy",
+    //         birthDate: 31,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Debuchy",
+    //         ultraPosition: 20,
+    //         club: "Saint-Etienne",
+    //         quotation: 19,
+    //         id: 31,
+    //         firstname: "Mathieu",
+    //         birthDate: 36,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Mendy",
+    //         ultraPosition: 21,
+    //         club: "Lyon",
+    //         quotation: 35,
+    //         id: 32,
+    //         firstname: "Ferland",
+    //         birthDate: 23,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Kone",
+    //         ultraPosition: 21,
+    //         club: "Troyes",
+    //         quotation: 20,
+    //         id: 33,
+    //         firstname: "Youssouf",
+    //         birthDate: 26,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Sakai",
+    //         ultraPosition: 21,
+    //         club: "Marseille",
+    //         quotation: 21,
+    //         id: 34,
+    //         firstname: "Hiroki",
+    //         birthDate: 31,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Benitez",
+    //         ultraPosition: 10,
+    //         club: "Nice",
+    //         quotation: 17,
+    //         id: 35,
+    //         firstname: "Walter",
+    //         birthDate: 2,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Alves",
+    //         ultraPosition: 21,
+    //         club: "PSG",
+    //         quotation: 21,
+    //         id: 36,
+    //         firstname: "Dani",
+    //         birthDate: 38,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Bamba",
+    //         ultraPosition: 32,
+    //         club: "Lille",
+    //         quotation: 24,
+    //         id: 37,
+    //         firstname: "Jonathan",
+    //         birthDate: 25,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Sala",
+    //         ultraPosition: 40,
+    //         club: "Nantes",
+    //         quotation: 23,
+    //         id: 38,
+    //         firstname: "Emiliano",
+    //         birthDate: 30,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Thuram",
+    //         ultraPosition: 40,
+    //         club: "Guingamp",
+    //         quotation: 24,
+    //         id: 39,
+    //         firstname: "Marcus",
+    //         birthDate: 24,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Perrin",
+    //         ultraPosition: 20,
+    //         club: "Saint-Etienne",
+    //         quotation: 20,
+    //         id: 40,
+    //         firstname: "Loic",
+    //         birthDate: 36,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Tielemans",
+    //         ultraPosition: 31,
+    //         club: "Monaco",
+    //         quotation: 29,
+    //         id: 41,
+    //         firstname: "Youri",
+    //         birthDate: 24,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Dembele",
+    //         ultraPosition: 40,
+    //         club: "Lyon",
+    //         quotation: 25,
+    //         id: 42,
+    //         firstname: "Moussa",
+    //         birthDate: 25,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "M'Vila",
+    //         ultraPosition: 31,
+    //         club: "Saint-Etienne",
+    //         quotation: 19,
+    //         id: 43,
+    //         firstname: "Yann",
+    //         birthDate: 31,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Carlos",
+    //         ultraPosition: 20,
+    //         club: "Nantes",
+    //         quotation: 15,
+    //         id: 44,
+    //         firstname: "Diego",
+    //         birthDate: 28,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Amavi",
+    //         ultraPosition: 21,
+    //         club: "Marseille",
+    //         quotation: 21,
+    //         id: 45,
+    //         firstname: "Jordan",
+    //         birthDate: 27,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Manceau",
+    //         ultraPosition: 21,
+    //         club: "Angers",
+    //         quotation: 13,
+    //         id: 46,
+    //         firstname: "Vincent",
+    //         birthDate: 31,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Dante",
+    //         ultraPosition: 20,
+    //         club: "Nice",
+    //         quotation: 27,
+    //         id: 47,
+    //         birthDate: 37,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Toure",
+    //         ultraPosition: 31,
+    //         club: "Nantes",
+    //         quotation: 18,
+    //         id: 48,
+    //         firstname: "Abdoulaye",
+    //         birthDate: 27,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             wonContestByMatch: 10,
+    //             percentageWonContest: 1,
+    //             wonDuelByMatch: 3,
+    //             percentageWonDuel: 10,
+    //             lostBallByMatch: 4,
+    //             percentageLostBall: 29,
+    //             foulsByMatch: 3,
+    //             foulsEnduredByMatch: 10,
+    //             percentageShotOnTarget: 70,
+    //             shotOnTargetByMatch: 10,
+
+    //             minutesByGoal: 39,
+    //             goalByMatch: 1,
+    //             shotByMatch: 5,
+    //             sumBigChanceMissed: 3,
+
+    //             sumBigChanceCreated: 4,
+    //             succeedPassByMatch: 29,
+    //             percentageSucceedPass: 80,
+    //             succeedPassBackZoneByMatch: 16,
+    //             percentageAccurateLongPass: 50,
+    //             succeedCrossByMatch: 3,
+    //             percentageCrossSuccess: 59,
+    //             succeedLongPassByMatch: 4,
+
+    //             interceptByMatch: 3,
+    //             tackleByMatch: 7,
+    //             goalsConcededByMatch: 1,
+    //             mistakeByMatch: 0,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Samba",
+    //         ultraPosition: 10,
+    //         club: "Caen",
+    //         quotation: 17,
+    //         id: 49,
+    //         firstname: "Brice",
+    //         birthDate: 27,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    //     {
+    //         lastname: "Butelle",
+    //         ultraPosition: 10,
+    //         club: "Marseille",
+    //         quotation: 14,
+    //         id: 50,
+    //         firstname: "Ludovic",
+    //         birthDate: 32,
+    //         stats: {
+    //             avgRate: 10,
+    //             sumGoals: 28,
+    //             sumPenalties: 10,
+    //             sumGoalAssists: 10,
+    //             appearances: {
+    //                 starter: 40,
+    //                 standIn: 2,
+    //             },
+    //             sumRedCard: 0,
+    //             sumYellowCard: 2,
+
+    //             goalsConcededByMatch: 19,
+    //             sumCleanSheet: 10,
+    //             sumSaves: 13,
+    //             sumDeflect: 4,
+    //             sumPenaltySave: 2,
+    //             sumPenaltyFaced: 5,
+    //         },
+    //     },
+    // ]);
+
+    const [players, setPlayers] = useState<PlayerState[] | null>(null);
+    // const [constPlayers, setConstPlayers] = useState([...players]);
+    // const [letPlayers, setLetPlayers] = useState([...players]);
+    const [constPlayers, setConstPlayers] = useState<PlayerState[] | null>(null);
+    const [letPlayers, setLetPlayers] = useState<PlayerState[] | null>(null);
 
     const [sortPlayers, setSortPlayers] = useState<string | null>(null);
 
     // Cycles de vie
-    // useEffect(() => {
-    //     axios
-    //         .get(`https://api.monpetitgazon.com/stats/championship/1/2018`)
-    //         .then(res => {
-    //             const persons = res.data;
-    //             setPlayers(persons);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }, []);
-
     useEffect(() => {
-        Dimensions.addEventListener("change", onChange);
-        return () => {
-            Dimensions.removeEventListener("change", onChange);
-        };
-    });
+        axios
+            .get(
+                `https://mpg-t-290dd-default-rtdb.europe-west1.firebasedatabase.app/players.json`,
+            )
+            .then(res => {
+                const playersArray = [];
+
+                for (let key in res.data) {
+                    playersArray.push(...res.data[key]);
+                }
+                setPlayers(playersArray);
+
+                setConstPlayers(playersArray);
+                setLetPlayers(playersArray);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
 
     // useEffect(() => {
-    //     axios
-    //         .post(
-    //             "https://mpg-t-290dd-default-rtdb.europe-west1.firebasedatabase.app/players.json",
-    //             players,
-    //         )
-    //         .then(response => {
-    //             console.log(response);
-    //         })
-    //         .catch(error => console.log(error));
-    // }, []);
+    //     Dimensions.addEventListener("change", onChange);
+    //     return () => {
+    //         Dimensions.removeEventListener("change", onChange);
+    //     };
+    // });
 
     // Fonctions
-    const onChange = ({ window, screen }) => {
-        setDimensions({ window, screen });
-    };
+    // const onChange = ({ window, screen }) => {
+    //     setDimensions({ window, screen });
+    // };
 
     const playerPosition = (ultraPosition: number): string => {
         let position: string | null;
@@ -1311,79 +2683,82 @@ const Home: React.FC = props => {
                 backgroundColor: Colors.light,
             }}
         >
-            <View style={styles.container}>
-                <StatusBar style="auto" />
-                {/* <Logo dimensions={dimensions} /> */}
-                <SearchBar
-                    constPlayers={constPlayers}
-                    setPlayers={setPlayers}
-                    playerPosition={playerPosition}
-                    setSortPlayers={setSortPlayers}
-                />
-                <View
-                    style={{
-                        paddingHorizontal: 10,
-                        borderRadius: 5,
-                        flexDirection: "row",
-                    }}
-                >
-                    {tableList.map(item => (
-                        <TouchableOpacity
-                            onPress={() => settingSortHandler(item)}
-                            activeOpacity={0.6}
-                            style={{
-                                ...styles.listWrapper,
-                                paddingHorizontal: 0,
-                                borderBottomWidth: 0,
-                                flex: flexItem(item),
-                            }}
-                            key={item}
-                        >
-                            <View
+            {players ? (
+                <View style={styles.container}>
+                    <StatusBar style="auto" />
+                    <SearchBar
+                        constPlayers={constPlayers}
+                        setPlayers={setPlayers}
+                        playerPosition={playerPosition}
+                        setSortPlayers={setSortPlayers}
+                    />
+                    <View
+                        style={{
+                            paddingHorizontal: 10,
+                            borderRadius: 5,
+                            flexDirection: "row",
+                        }}
+                    >
+                        {tableList.map(item => (
+                            <TouchableOpacity
+                                onPress={() => settingSortHandler(item)}
+                                activeOpacity={0.6}
                                 style={{
-                                    ...styles.row,
-                                    height: 50,
-                                    // flex: 2,
+                                    ...styles.listWrapper,
+                                    paddingHorizontal: 0,
+                                    borderBottomWidth: 0,
+                                    flex: flexItem(item),
                                 }}
+                                key={item}
                             >
-                                <Text
+                                <View
                                     style={{
                                         ...styles.row,
-                                        color: Colors.grayHint,
-                                        fontWeight: "bold",
+                                        height: 50,
+                                        // flex: 2,
                                     }}
                                 >
-                                    {item}
-                                    {sortPlayers && displayArrow(item)}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </View>
+                                    <Text
+                                        style={{
+                                            ...styles.row,
+                                            color: Colors.grayHint,
+                                            fontWeight: "bold",
+                                        }}
+                                    >
+                                        {item}
+                                        {sortPlayers && displayArrow(item)}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
 
-                <FlatList
-                    data={players}
-                    renderItem={player => (
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.navigation.navigate("Detail", {
-                                    player,
-                                });
-                            }}
-                            activeOpacity={0.7}
-                        >
-                            <FlatlistPlayers
-                                player={player}
-                                playerPosition={playerPosition}
-                            />
-                        </TouchableOpacity>
-                    )}
-                    keyExtractor={player => player.id.toString()}
-                    style={{
-                        width: "100%",
-                    }}
-                />
-            </View>
+                    <FlatList
+                        data={players}
+                        renderItem={player => (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    props.navigation.navigate("Detail", {
+                                        player,
+                                    });
+                                }}
+                                activeOpacity={0.7}
+                            >
+                                <FlatlistPlayers
+                                    player={player}
+                                    playerPosition={playerPosition}
+                                />
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={player => player.id.toString()}
+                        style={{
+                            width: "100%",
+                        }}
+                    />
+                </View>
+            ) : (
+                <ActivityIndicator size="large" color="#000" />
+            )}
         </View>
     );
 };

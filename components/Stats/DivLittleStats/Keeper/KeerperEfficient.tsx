@@ -9,11 +9,11 @@ import Parenthesis from "../ComponentLittleStats/Parenthesis";
 // Interface
 interface KeeperEfficientProps {
     goalsConcededByMatch: number | undefined;
-    sumCleanSheet: number;
-    sumSaves: number;
-    sumDeflect: number;
-    sumPenaltySave: number;
-    sumPenaltyFaced: number;
+    sumCleanSheet: number | undefined;
+    sumSaves: number | undefined;
+    sumDeflect: number | undefined;
+    sumPenaltySave: number | undefined;
+    sumPenaltyFaced: number | undefined;
 }
 
 const KeeperEfficient: React.FC<KeeperEfficientProps> = props => {
@@ -28,7 +28,11 @@ const KeeperEfficient: React.FC<KeeperEfficientProps> = props => {
             <Essential stat={props.sumDeflect}>Parades : </Essential>
             <Parenthesis
                 stat={props.sumPenaltySave}
-                secondary={(props.sumPenaltySave / props.sumPenaltyFaced) * 100}
+                secondary={
+                    props.sumPenaltySave &&
+                    props.sumPenaltyFaced &&
+                    (props.sumPenaltySave / props.sumPenaltyFaced) * 100
+                }
                 pourcentage={true}
             >
                 Pénaltys sauvés :

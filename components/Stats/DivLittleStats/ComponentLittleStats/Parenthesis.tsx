@@ -6,7 +6,7 @@ import Colors from "../../../../constants/Colors";
 // Interface
 interface ParenthesisProps {
     children: string;
-    stat: number;
+    stat: number | undefined;
     secondary: number | undefined;
     pourcentage?: boolean;
 }

@@ -6,11 +6,11 @@ import Colors from "../../../constants/Colors";
 // Interface
 interface BigStatsProps {
     children: string;
-    card: boolean;
-    redCard: number;
-    yellowCard: number;
-    stats: number;
-    parenthesisStats: number;
+    card?: boolean;
+    redCard?: number;
+    yellowCard?: number;
+    stats?: number;
+    parenthesisStats?: number;
 }
 
 const BigStats: React.FC<BigStatsProps> = props => {
