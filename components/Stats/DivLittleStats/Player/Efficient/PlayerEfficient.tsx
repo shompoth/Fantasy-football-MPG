@@ -8,16 +8,16 @@ import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
 // Interface
 interface PlayerEfficientProps {
-    wonContestByMatch: number;
-    percentageWonContest: number;
-    wonDuelByMatch: number;
-    percentageWonDuel: number;
-    lostBallByMatch: number;
-    percentageLostBall: number;
-    foulsByMatch: number;
-    foulsEnduredByMatch: number;
-    shotOnTargetByMatch: number;
-    percentageShotOnTarget: number;
+    wonContestByMatch?: number;
+    percentageWonContest?: number;
+    wonDuelByMatch?: number;
+    percentageWonDuel?: number;
+    lostBallByMatch?: number;
+    percentageLostBall?: number;
+    foulsByMatch?: number;
+    foulsEnduredByMatch?: number;
+    shotOnTargetByMatch?: number;
+    percentageShotOnTarget?: number;
 }
 
 const PlayerEfficient: React.FC<PlayerEfficientProps> = props => {

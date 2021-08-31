@@ -44,9 +44,9 @@ export interface PlayerState {
     birthDate: number;
     stats: {
         avgRate: number;
-        sumGoals: number;
-        sumPenalties: number;
-        sumGoalAssists: number;
+        sumGoals?: number;
+        sumPenalties?: number;
+        sumGoalAssists?: number;
         appearances: {
             starter: number;
             standIn: number;
@@ -2499,8 +2499,6 @@ const Home: React.FC<HomeProps> = props => {
     // ]);
 
     const [players, setPlayers] = useState<PlayerState[] | null>(null);
-    // const [constPlayers, setConstPlayers] = useState([...players]);
-    // const [letPlayers, setLetPlayers] = useState([...players]);
     const [constPlayers, setConstPlayers] = useState<PlayerState[] | null>(null);
     const [letPlayers, setLetPlayers] = useState<PlayerState[] | null>(null);
 

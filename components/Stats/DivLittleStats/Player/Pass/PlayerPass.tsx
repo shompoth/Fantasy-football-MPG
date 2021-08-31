@@ -8,16 +8,16 @@ import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
 // Interface
 interface PlayerPassProps {
-    sumGoalAssist: number;
-    sumBigChanceCreated: number;
-    succeedPassByMatch: number;
-    percentageSucceedPass: number;
-    succeedPassBackZoneByMatch: number;
-    percentageAccuratePassBackZone: number;
-    succeedLongPassByMatch: number;
-    percentageAccurateLongPass: number;
-    succeedCrossByMatch: number;
-    percentageCrossSuccess: number;
+    sumGoalAssist?: number;
+    sumBigChanceCreated?: number;
+    succeedPassByMatch?: number;
+    percentageSucceedPass?: number;
+    succeedPassBackZoneByMatch?: number;
+    percentageAccuratePassBackZone?: number;
+    succeedLongPassByMatch?: number;
+    percentageAccurateLongPass?: number;
+    succeedCrossByMatch?: number;
+    percentageCrossSuccess?: number;
 }
 
 const PlayerPass: React.FC<PlayerPassProps> = props => {

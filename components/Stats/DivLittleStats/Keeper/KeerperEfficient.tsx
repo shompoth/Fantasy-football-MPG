@@ -8,12 +8,12 @@ import Parenthesis from "../ComponentLittleStats/Parenthesis";
 
 // Interface
 interface KeeperEfficientProps {
-    goalsConcededByMatch: number;
-    sumCleanSheet: number;
-    sumSaves: number;
-    sumDeflect: number;
-    sumPenaltySave: number;
-    sumPenaltyFaced: number;
+    goalsConcededByMatch?: number;
+    sumCleanSheet?: number;
+    sumSaves?: number;
+    sumDeflect?: number;
+    sumPenaltySave?: number;
+    sumPenaltyFaced?: number;
 }
 
 const KeeperEfficient: React.FC<KeeperEfficientProps> = props => {

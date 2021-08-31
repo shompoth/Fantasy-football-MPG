@@ -6,7 +6,6 @@ import { NavigationContainer } from "@react-navigation/native";
 function AppNavigator() {
     return (
         <NavigationContainer>
-            {/* <MainStackNavigator /> */}
             <AppTabNavigator />
         </NavigationContainer>
     );

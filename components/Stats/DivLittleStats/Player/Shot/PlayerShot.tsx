@@ -8,12 +8,12 @@ import Parenthesis from "../../ComponentLittleStats/Parenthesis";
 
 // Interface
 interface PlayerShotProps {
-    sumGoals: number;
-    sumPenalties: number;
-    minutesByGoal: number;
-    goalByMatch: number;
-    shotByMatch: number;
-    sumBigChanceMissed: number;
+    sumGoals?: number;
+    sumPenalties?: number;
+    minutesByGoal?: number;
+    goalByMatch?: number;
+    shotByMatch?: number;
+    sumBigChanceMissed?: number;
 }
 
 const PlayerShot: React.FC<PlayerShotProps> = props => {

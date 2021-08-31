@@ -7,10 +7,10 @@ import Essential from "../../ComponentLittleStats/Essential";
 
 // Interface
 interface PlayerStrongProps {
-    interceptByMatch: number;
-    tackleByMatch: number;
-    goalsConcededByMatch: number;
-    mistakeByMatch: number;
+    interceptByMatch?: number;
+    tackleByMatch?: number;
+    goalsConcededByMatch?: number;
+    mistakeByMatch?: number;
 }
 
 const PlayerStrong: React.FC<PlayerStrongProps> = props => {
