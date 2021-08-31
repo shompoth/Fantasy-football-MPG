@@ -13,6 +13,14 @@ import MyTeamScreen from "../screens/MyTeam";
 import { Icon } from "../UI";
 // import HeaderButton from "../UI/HeaderButton";
 import { Image } from "react-native";
+import { PlayerState } from "../screens/Home";
+
+// Interface
+export type RootStackParamList = {
+    TabHome: undefined;
+    TabTeam: undefined;
+    Detail: { player: PlayerState };
+};
 
 // Variable
 const headerOptions = {

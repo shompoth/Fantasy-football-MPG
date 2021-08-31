@@ -28,23 +28,20 @@ enum PositionJoueur {
     Gardien = 10,
 }
 
-const MyTeam: React.FC = props => {
+// Interface
+interface MyTeamProps {
+    navigation: { navigate: Function };
+}
+
+const MyTeam: React.FC<MyTeamProps> = props => {
     // variables redux
-    const team: PlayerState[] = useSelector(state =>
-        state.team.team.sort((a: PlayerState, b: PlayerState) =>
-            b.ultraPosition > a.ultraPosition ? 1 : -1,
-        ),
-    );
+    const team: PlayerState[] = useSelector(state => state.team.team);
 
     const dispatch = useDispatch();
 
     // Fonction
-    const deletePlayerTeamHandler = (id: PlayerState) => {
+    const deletePlayerTeamHandler = (id: number) => {
         dispatch(teamActions.removeInTeam(id));
-    };
-
-    const navigationHandler = () => {
-        props.navigation.navigate("TabHome");
     };
 
     return (
@@ -166,8 +163,7 @@ const MyTeam: React.FC = props => {
                         Vous n'avez aucun joueur dans votre équipe. {"\n"}
                     </Text>
                     <TouchableOpacity
-                        // onPress={() => props.navigation.navigate("TabHome")}
-                        onPress={() => navigationHandler()}
+                        onPress={() => props.navigation.navigate("TabHome")}
                         activeOpacity={0.8}
                         style={{
                             backgroundColor: Colors.secondary,

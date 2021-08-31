@@ -6,8 +6,8 @@ import Colors from "../../../../constants/Colors";
 // Interface
 interface ParenthesisProps {
     children: string;
-    stat: number | undefined;
-    secondary: number | undefined;
+    stat?: number;
+    secondary?: number;
     pourcentage?: boolean;
 }
 
@@ -30,6 +30,7 @@ const Parenthesis: React.FC<ParenthesisProps> = props => {
 const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
+        alignItems: "center",
     },
     rowDiv: {
         flexDirection: "row",
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     },
     lowerOpacity: {
         opacity: 0.7,
+        fontSize: 11,
     },
 });
 

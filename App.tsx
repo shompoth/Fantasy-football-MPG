@@ -14,7 +14,6 @@ const rootReducer = combineReducers({
     team: teamReducer,
     toogleIconPlayer: toogleIconPlayerReducer,
 });
-// teamReducer;
 
 const store = createStore(rootReducer);
 

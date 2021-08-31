@@ -6,7 +6,7 @@ import Colors from "../../../../constants/Colors";
 // Interface
 interface EssentialProps {
     children: string;
-    stat: number | undefined;
+    stat?: number;
 }
 
 const Essential: React.FC<EssentialProps> = props => {

@@ -311,7 +311,6 @@ const PlayerDetails: React.FC = props => {
                                             player.stats.percentageCrossSuccess
                                         }
                                     >
-                                        {/* UN AS DE LA PASSE ?*/}
                                         <View style={styles.divRowCenter}>
                                             <View style={styles.mr5}>
                                                 <Icon

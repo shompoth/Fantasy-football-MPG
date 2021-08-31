@@ -6,6 +6,7 @@ import Colors from "../../constants/Colors";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 // import Draggable from "react-draggable";
 import { Icon } from "../../UI";
+import { PlayerState } from "../../screens/Home";
 
 // Interface
 interface PlayerTeamProps {
@@ -16,8 +17,8 @@ interface PlayerTeamProps {
 
 const PlayerTeam: React.FC<PlayerTeamProps> = props => {
     // States
-    const [left, setLeft] = useState(100);
-    const [top, setTop] = useState(100);
+    // const [left, setLeft] = useState(100);
+    // const [top, setTop] = useState(100);
 
     // Function
     // const handleDrag = (deltaX: number, deltaY: number) => {

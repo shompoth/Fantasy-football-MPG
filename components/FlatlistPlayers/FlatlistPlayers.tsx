@@ -34,6 +34,7 @@ const FlatlistPlayers: React.FC<FlatlistPlayerProps> = props => {
 
     // Variable redux
     const team: PlayerState[] = useSelector(state => state.team.team);
+    // const team: PlayerState[] = useSelector(state => console.log(state));
     const dispatch = useDispatch();
 
     // Fonctions

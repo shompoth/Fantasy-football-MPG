@@ -4,6 +4,7 @@ import Colors from "../constants/Colors";
 import { NavigationProp } from "@react-navigation/native";
 // import { StackNavigationProp } from "@react-navigation/stack";
 // import axios from "axios";
+import { RootStackParamList } from "../navigation/Navigators";
 
 // Composants
 import { StatusBar } from "expo-status-bar";
@@ -15,6 +16,7 @@ import {
     Dimensions,
     TouchableOpacity,
     ActivityIndicator,
+    ScaledSize,
 } from "react-native";
 
 import { SearchBar, FlatlistPlayers } from "../components";
@@ -74,7 +76,6 @@ export interface PlayerState {
         succeedCrossByMatch?: number;
         percentageCrossSuccess?: number;
         succeedLongPassByMatch?: number;
-
         interceptByMatch?: number;
         tackleByMatch?: number;
         goalsConcededByMatch?: number;
@@ -89,12 +90,11 @@ export interface PlayerState {
     };
 }
 
-// export interface WindowProps {
-//     window: ScaledSize;
-//     screen: ScaledSize;
-// }
+interface HomeProps {
+    navigation: { navigate: Function };
+}
 
-const Home: React.FC = props => {
+const Home: React.FC<HomeProps> = props => {
     // States
     const [dimensions, setDimensions] = useState({ window, screen });
 
@@ -2519,7 +2519,6 @@ const Home: React.FC = props => {
                     playersArray.push(...res.data[key]);
                 }
                 setPlayers(playersArray);
-
                 setConstPlayers(playersArray);
                 setLetPlayers(playersArray);
             })
@@ -2536,9 +2535,9 @@ const Home: React.FC = props => {
     // });
 
     // Fonctions
-    // const onChange = ({ window, screen }) => {
-    //     setDimensions({ window, screen });
-    // };
+    const onChange = ({ window, screen }: { window: ScaledSize; screen: ScaledSize }) => {
+        setDimensions({ window, screen });
+    };
 
     const playerPosition = (ultraPosition: number): string => {
         let position: string | null;
@@ -2570,71 +2569,75 @@ const Home: React.FC = props => {
     };
 
     const settingSortHandler = (sort: string | null): void => {
-        const newPlayers = [...players];
-        const newFixedPlayers = [...constPlayers];
+        if (players && constPlayers) {
+            const newPlayers = [...players];
+            const newFixedPlayers = [...constPlayers];
 
-        if (sort === tableList[0]) {
-            if (sortPlayers === "alphaDescending") {
-                setSortPlayers("alphaAscending");
-                newPlayers.sort((a, b) =>
-                    b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
-                );
-                newFixedPlayers.sort((a, b) =>
-                    b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
-                );
-            } else {
-                setSortPlayers("alphaDescending");
-                newPlayers.sort((a, b) =>
-                    a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
-                );
-                newFixedPlayers.sort((a, b) =>
-                    a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
-                );
+            if (sort === tableList[0]) {
+                if (sortPlayers === "alphaDescending") {
+                    setSortPlayers("alphaAscending");
+                    newPlayers.sort((a, b) =>
+                        b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
+                    );
+                    newFixedPlayers.sort((a, b) =>
+                        b.lastname.toUpperCase() > a.lastname.toUpperCase() ? 1 : -1,
+                    );
+                } else {
+                    setSortPlayers("alphaDescending");
+                    newPlayers.sort((a, b) =>
+                        a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
+                    );
+                    newFixedPlayers.sort((a, b) =>
+                        a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1,
+                    );
+                }
             }
-        }
-        if (sort === tableList[1]) {
-            if (sortPlayers === "posteDescending") {
-                setSortPlayers("posteAscending");
-                newPlayers.sort((a, b) => (b.ultraPosition > a.ultraPosition ? 1 : -1));
-                newFixedPlayers.sort((a, b) =>
-                    b.ultraPosition > a.ultraPosition ? 1 : -1,
-                );
-            } else {
-                setSortPlayers("posteDescending");
-                newPlayers.sort((a, b) => (a.ultraPosition > b.ultraPosition ? 1 : -1));
-                newFixedPlayers.sort((a, b) =>
-                    a.ultraPosition > b.ultraPosition ? 1 : -1,
-                );
+            if (sort === tableList[1]) {
+                if (sortPlayers === "posteDescending") {
+                    setSortPlayers("posteAscending");
+                    newPlayers.sort((a, b) =>
+                        b.ultraPosition > a.ultraPosition ? 1 : -1,
+                    );
+                    newFixedPlayers.sort((a, b) =>
+                        b.ultraPosition > a.ultraPosition ? 1 : -1,
+                    );
+                } else {
+                    setSortPlayers("posteDescending");
+                    newPlayers.sort((a, b) =>
+                        a.ultraPosition > b.ultraPosition ? 1 : -1,
+                    );
+                    newFixedPlayers.sort((a, b) =>
+                        a.ultraPosition > b.ultraPosition ? 1 : -1,
+                    );
+                }
             }
-        }
-        if (sort === tableList[2]) {
-            if (sortPlayers === "clubDescending") {
-                setSortPlayers("clubAscending");
-                newPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
-                newFixedPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
-            } else {
-                setSortPlayers("clubDescending");
-                newPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
-                newFixedPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+            if (sort === tableList[2]) {
+                if (sortPlayers === "clubDescending") {
+                    setSortPlayers("clubAscending");
+                    newPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
+                    newFixedPlayers.sort((a, b) => (b.club > a.club ? 1 : -1));
+                } else {
+                    setSortPlayers("clubDescending");
+                    newPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+                    newFixedPlayers.sort((a, b) => (a.club > b.club ? 1 : -1));
+                }
             }
-        }
-        if (sort === tableList[3]) {
-            if (sortPlayers === "coteDescending") {
-                setSortPlayers("coteAscending");
-                newPlayers.sort((a, b) => b.quotation - a.quotation);
-                newFixedPlayers.sort((a, b) => b.quotation - a.quotation);
-            } else {
-                setSortPlayers("coteDescending");
-                newPlayers.sort((a, b) => a.quotation - b.quotation);
-                newFixedPlayers.sort((a, b) => a.quotation - b.quotation);
+            if (sort === tableList[3]) {
+                if (sortPlayers === "coteDescending") {
+                    setSortPlayers("coteAscending");
+                    newPlayers.sort((a, b) => b.quotation - a.quotation);
+                    newFixedPlayers.sort((a, b) => b.quotation - a.quotation);
+                } else {
+                    setSortPlayers("coteDescending");
+                    newPlayers.sort((a, b) => a.quotation - b.quotation);
+                    newFixedPlayers.sort((a, b) => a.quotation - b.quotation);
+                }
             }
+            setPlayers(newPlayers);
+            setLetPlayers(newFixedPlayers);
         }
-        setPlayers(newPlayers);
-
-        setLetPlayers(newFixedPlayers);
     };
 
-    // CHECK TYPE ARROW
     const displayArrow = (item: string) => {
         let arrow;
         if (item === tableList[0]) {
@@ -2715,7 +2718,6 @@ const Home: React.FC = props => {
                                     style={{
                                         ...styles.row,
                                         height: 50,
-                                        // flex: 2,
                                     }}
                                 >
                                     <Text

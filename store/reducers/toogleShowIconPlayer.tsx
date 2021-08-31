@@ -9,7 +9,6 @@ export default (state = initialState, action) => {
         case TOOGLE_SHOW_PLAYER_TEAM:
             return {
                 ...state,
-                // toogleIconPlayer: !state.toogleIconPlayer,
                 toogleIconPlayer: false,
             };
 

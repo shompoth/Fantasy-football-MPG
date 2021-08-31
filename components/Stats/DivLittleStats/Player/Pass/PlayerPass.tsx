@@ -13,7 +13,7 @@ interface PlayerPassProps {
     succeedPassByMatch: number;
     percentageSucceedPass: number;
     succeedPassBackZoneByMatch: number;
-    percentageAccuratePassBackZone: number | undefined;
+    percentageAccuratePassBackZone: number;
     succeedLongPassByMatch: number;
     percentageAccurateLongPass: number;
     succeedCrossByMatch: number;
