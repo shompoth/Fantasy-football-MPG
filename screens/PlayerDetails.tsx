@@ -59,18 +59,18 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
             );
             return;
         }
-        if (!team.indexOf(player)) {
+        if (team.indexOf(player)) {
             dispatch(teamActions.addInTeam(player));
         } else {
             dispatch(teamActions.removeInTeam(player.id));
         }
         if (
-            (team.length < 18 && !team.indexOf(player)) ||
-            (team.length < 19 && team.indexOf(player))
+            (team.length < 18 && team.indexOf(player)) ||
+            (team.length < 19 && !team.indexOf(player))
         )
             Alert.alert(
                 player.firstname + " " + player.lastname,
-                team.indexOf(player) ? "quitte votre équipe" : "rejoint votre équipe",
+                !team.indexOf(player) ? "quitte votre équipe" : "rejoint votre équipe",
             );
     };
 
@@ -117,12 +117,12 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
                                 >
                                     <Icon
                                         name={
-                                            team.indexOf(player)
+                                            !team.indexOf(player)
                                                 ? "person-remove"
                                                 : "person-add"
                                         }
                                         color={
-                                            team.indexOf(player)
+                                            !team.indexOf(player)
                                                 ? Colors.danger
                                                 : Colors.success
                                         }

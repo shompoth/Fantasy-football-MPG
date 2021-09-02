@@ -16,18 +16,7 @@ interface PlayerTeamProps {
 }
 
 const PlayerTeam: React.FC<PlayerTeamProps> = props => {
-    // States
-    // const [left, setLeft] = useState(100);
-    // const [top, setTop] = useState(100);
-
-    // Function
-    // const handleDrag = (deltaX: number, deltaY: number) => {
-    //     setLeft(left + deltaX);
-    //     setTop(top + deltaY);
-    // };
-
     return (
-        // <Draggable left={left} top={top} onDrag={handleDrag}>
         <View style={styles.playerStyle}>
             <View style={{ marginRight: 5 }}>
                 <Icon name="person-circle-outline" color={Colors.grayLowHint} size={20} />
@@ -43,7 +32,6 @@ const PlayerTeam: React.FC<PlayerTeamProps> = props => {
                 <Icon name="close-circle" color={Colors.danger} size={16} />
             </TouchableOpacity>
         </View>
-        // </Draggable>
     );
 };
 const styles = StyleSheet.create({
@@ -63,8 +51,6 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         transform: [{ translateX: "9%" }, { translateY: "-7%" }],
-        // backgroundColor: Colors.light,
-        // borderRadius: 50,
     },
 });
 
