@@ -1,10 +1,9 @@
 // Librairies
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
     View,
     Text,
     StyleSheet,
-    ActivityIndicator,
     ScrollView,
     TouchableOpacity,
     Alert,
@@ -31,10 +30,18 @@ import { PlayerState } from "./Home";
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
 
-const PlayerDetails: React.FC = props => {
+// Type
+import { RootState } from "../App";
+
+// Interface
+interface PlayerDetailsProps {
+    route: { params: { player: { item: PlayerState } } };
+}
+
+const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
     // Variables
     const player: PlayerState = props.route.params.player.item;
-    const team = useSelector(state => state.team.team);
+    const team = useSelector((state: RootState) => state.team);
 
     const dispatch = useDispatch();
 
@@ -52,18 +59,18 @@ const PlayerDetails: React.FC = props => {
             );
             return;
         }
-        if (!team.includes(player)) {
+        if (!team.indexOf(player)) {
             dispatch(teamActions.addInTeam(player));
         } else {
             dispatch(teamActions.removeInTeam(player.id));
         }
         if (
-            (team.length < 18 && !team.includes(player)) ||
-            (team.length < 19 && team.includes(player))
+            (team.length < 18 && !team.indexOf(player)) ||
+            (team.length < 19 && team.indexOf(player))
         )
             Alert.alert(
                 player.firstname + " " + player.lastname,
-                team.includes(player) ? "quitte votre équipe" : "rejoint votre équipe",
+                team.indexOf(player) ? "quitte votre équipe" : "rejoint votre équipe",
             );
     };
 
@@ -110,12 +117,12 @@ const PlayerDetails: React.FC = props => {
                                 >
                                     <Icon
                                         name={
-                                            team.includes(player)
+                                            team.indexOf(player)
                                                 ? "person-remove"
                                                 : "person-add"
                                         }
                                         color={
-                                            team.includes(player)
+                                            team.indexOf(player)
                                                 ? Colors.danger
                                                 : Colors.success
                                         }

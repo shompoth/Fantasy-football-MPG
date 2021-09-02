@@ -3,11 +3,18 @@ import { Alert } from "react-native";
 import { ActionCreators } from "@react-navigation/routers";
 import { PlayerState } from "../../screens/Home";
 
-const initialState = {
+// Interface
+interface Action {
+    type: string;
+    storePlayer: PlayerState;
+    storeId: number;
+}
+
+const initialState: { team: PlayerState[] } = {
     team: [],
 };
 
-export default (state = initialState, action) => {
+export default (state = initialState, action: Action) => {
     switch (action.type) {
         case ADD_IN_TEAM:
             if (state.team.length === 18) {

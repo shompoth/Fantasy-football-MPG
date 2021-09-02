@@ -1,22 +1,18 @@
 // Librairies
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Colors from "../constants/Colors";
 
 // Composants
-import {
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-    TouchableOpacity,
-    ImageBackground,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from "react-native";
 import { PlayerTeam } from "../components";
 import { PlayerState } from "./Home";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
+
+// Type
+import { RootState } from "../App";
 
 // Enum
 enum PositionJoueur {
@@ -35,7 +31,7 @@ interface MyTeamProps {
 
 const MyTeam: React.FC<MyTeamProps> = props => {
     // variables redux
-    const team: PlayerState[] = useSelector(state => state.team.team);
+    const team: PlayerState[] = useSelector((state: RootState) => state.team);
 
     const dispatch = useDispatch();
 

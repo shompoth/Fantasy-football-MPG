@@ -3,15 +3,7 @@ import React from "react";
 import Colors from "../../constants/Colors";
 
 // Composants
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    Alert,
-    TouchableWithoutFeedback,
-} from "react-native";
-
+import { StyleSheet, View, Text, Alert, TouchableWithoutFeedback } from "react-native";
 import { Icon } from "../../UI";
 
 // Interface
@@ -28,13 +20,15 @@ interface FlatlistPlayerProps {
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../../store/actions/team";
 
+// Type
+import { RootState } from "../../App";
+
 const FlatlistPlayers: React.FC<FlatlistPlayerProps> = props => {
     // Variable
     const player = props.player.item;
 
     // Variable redux
-    const team: PlayerState[] = useSelector(state => state.team.team);
-    // const team: PlayerState[] = useSelector(state => console.log(state));
+    const team: PlayerState[] = useSelector((state: RootState) => state.team);
     const dispatch = useDispatch();
 
     // Fonctions
@@ -82,9 +76,8 @@ const FlatlistPlayers: React.FC<FlatlistPlayerProps> = props => {
         <View
             style={{
                 ...styles.listWrapper,
-                backgroundColor: team.includes(player)
-                    ? Colors.primaryLight
-                    : Colors.light,
+                backgroundColor:
+                    team && team.includes(player) ? Colors.primaryLight : Colors.light,
             }}
         >
             <Text style={{ ...styles.row, flex: 1.5 }}>{player.lastname}</Text>
