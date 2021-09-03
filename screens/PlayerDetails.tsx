@@ -33,6 +33,9 @@ import * as teamActions from "../store/actions/team";
 // Type
 import { RootState } from "../App";
 
+// Enum
+import { PositionJoueur } from "../Utils/enum";
+
 // Interface
 interface PlayerDetailsProps {
     route: { params: { player: { item: PlayerState } } };
@@ -42,17 +45,17 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
     // Variables
     const player: PlayerState = props.route.params.player.item;
     const team = useSelector((state: RootState) => state.team);
-
     const dispatch = useDispatch();
 
     // Fonction
     const updatedTeamPlayerHandler = (player: PlayerState) => {
         // variable
         const countMaxThreeKeeper =
-            team.filter((player: PlayerState) => player.ultraPosition === 10).length ===
-            3;
+            team.filter(
+                (player: PlayerState) => player.ultraPosition === PositionJoueur.Gardien,
+            ).length === 3;
 
-        if (countMaxThreeKeeper && player.ultraPosition === 10) {
+        if (countMaxThreeKeeper && player.ultraPosition === PositionJoueur.Gardien) {
             Alert.alert(
                 "Attention",
                 "Vous ne pouvez pas avoir plus de 3 gardiens dans votre équipe",
@@ -139,7 +142,7 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
                         <View style={styles.mt20}>
                             <View style={styles.divWrapperBigStats}>
                                 <BigStats stats={player.stats.avgRate}>Note moy</BigStats>
-                                {player.ultraPosition === 10 ? (
+                                {player.ultraPosition === PositionJoueur.Gardien ? (
                                     <>
                                         <BigStats stats={player.stats.sumCleanSheet}>
                                             Clean Sheat
@@ -184,13 +187,11 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = props => {
                     <ScrollView
                         style={{
                             width: "100%",
-                            // paddingHorizontal: 10,
                             paddingHorizontal: 5,
-
                             backgroundColor: Colors.light,
                         }}
                     >
-                        {player.ultraPosition === 10 ? (
+                        {player.ultraPosition === PositionJoueur.Gardien ? (
                             <View style={styles.divWrapperLittleStats}>
                                 <KeeperEfficient
                                     goalsConcededByMatch={

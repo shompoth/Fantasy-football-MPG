@@ -1,12 +1,10 @@
 //Librairies
-import React, { useState } from "react";
+import React from "react";
 import Colors from "../../constants/Colors";
 
 // Composants
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-// import Draggable from "react-draggable";
 import { Icon } from "../../UI";
-import { PlayerState } from "../../screens/Home";
 
 // Interface
 interface PlayerTeamProps {
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 0,
         top: 0,
-        transform: [{ translateX: "9%" }, { translateY: "-7%" }],
+        transform: [{ translateX: 9 }, { translateY: -7 }],
     },
 });
 

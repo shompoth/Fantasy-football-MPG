@@ -11,18 +11,11 @@ import { PlayerState } from "./Home";
 import { useSelector, useDispatch } from "react-redux";
 import * as teamActions from "../store/actions/team";
 
+// Enum
+import { PositionJoueur } from "../Utils/enum";
+
 // Type
 import { RootState } from "../App";
-
-// Enum
-enum PositionJoueur {
-    Attaquant = 40,
-    MilieuOffensif = 32,
-    MilieuDefensif = 31,
-    Lateraux = 21,
-    Defenseur = 20,
-    Gardien = 10,
-}
 
 // Interface
 interface MyTeamProps {
@@ -112,7 +105,7 @@ const MyTeam: React.FC<MyTeamProps> = props => {
                                     player =>
                                         player.ultraPosition ===
                                             PositionJoueur.Defenseur ||
-                                        player.ultraPosition === PositionJoueur.Lateraux,
+                                        player.ultraPosition === PositionJoueur.Lateral,
                                 )
                                 .map(player => (
                                     <PlayerTeam
@@ -179,12 +172,8 @@ const MyTeam: React.FC<MyTeamProps> = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // width: window.width > 450 ? "85%" : "95%", // // //
-        // width: "95%",
         alignItems: "center",
         justifyContent: "center",
-        // paddingTop: 10,
-        // paddingBottom: 20,
         backgroundColor: Colors.light,
     },
     divPlayerPosition: {
@@ -196,7 +185,6 @@ const styles = StyleSheet.create({
     },
     rowMargin: {
         flexDirection: "row",
-        // margin: 5,
     },
     textAddPlayer: {
         color: Colors.light,

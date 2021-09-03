@@ -9,6 +9,9 @@ import { Icon } from "../../UI";
 // Interface
 import { PlayerState } from "../../screens/Home";
 
+// Enum
+import { PositionJoueur } from "../../Utils/enum";
+
 interface FlatlistPlayerProps {
     player: {
         item: PlayerState;
@@ -42,14 +45,14 @@ const FlatlistPlayers: React.FC<FlatlistPlayerProps> = props => {
         );
     };
 
-    // CHECK HERE ----------------------------------------------------------
     const updatedTeamPlayerHandler = (player: PlayerState) => {
         // variable
         const countMaxThreeKeeper =
-            team.filter((player: PlayerState) => player.ultraPosition === 10).length ===
-            3;
+            team.filter(
+                (player: PlayerState) => player.ultraPosition === PositionJoueur.Gardien,
+            ).length === 3;
 
-        if (countMaxThreeKeeper && player.ultraPosition === 10) {
+        if (countMaxThreeKeeper && player.ultraPosition === PositionJoueur.Gardien) {
             Alert.alert(
                 "Attention",
                 "Vous ne pouvez pas avoir plus de 3 gardiens dans votre équipe",

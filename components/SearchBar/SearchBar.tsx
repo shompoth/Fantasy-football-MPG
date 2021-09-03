@@ -17,18 +17,25 @@ interface SearchBarProps {
     setSortPlayers: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
+// Enum
+enum ListSearchBar {
+    Joueur = "Joueur",
+    Poste = "Poste",
+    Club = "Club",
+}
+
 const SearchBar: React.FC<SearchBarProps> = props => {
     // States
-    const [search, setSearch] = useState<string | null>(null);
+    const [search, setSearch] = useState<string>("");
     const [buttonFilterName, setButtonFilterName] = useState<string[]>([
-        "Joueur",
-        "Poste",
-        "Club",
+        ListSearchBar.Joueur,
+        ListSearchBar.Poste,
+        ListSearchBar.Club,
     ]);
     const [activeButtonName, setActiveButtonName] = useState<string>(buttonFilterName[0]);
 
-    // Fonctions
-    const searchPlayerHandler = (text: string | null) => {
+    // Fonction
+    const searchPlayerHandler = (text: string) => {
         if (text && props.constPlayers) {
             const newData = props.constPlayers.filter((item: PlayerState) => {
                 let itemData;
@@ -81,7 +88,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
             >
                 {search ? (
                     <TouchableOpacity
-                        onPress={() => searchPlayerHandler(null)}
+                        onPress={() => searchPlayerHandler("")}
                         activeOpacity={0.7}
                     >
                         <Icon

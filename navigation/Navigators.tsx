@@ -2,8 +2,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import Colors from "../constants/Colors";
+
 // Ecrans
 import HomeScreen from "../screens/Home";
 import PlayerDetailsScreen from "../screens/PlayerDetails";
@@ -11,7 +11,6 @@ import MyTeamScreen from "../screens/MyTeam";
 
 // Composant
 import { Icon } from "../UI";
-// import HeaderButton from "../UI/HeaderButton";
 import { Image } from "react-native";
 import { PlayerState } from "../screens/Home";
 

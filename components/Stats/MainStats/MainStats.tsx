@@ -3,15 +3,23 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../../constants/Colors";
 
-// interface
+// Enum
+import { PositionJoueur } from "../../../Utils/enum";
+
+enum Position {
+    Gardien = "Gardien",
+    Defenseur = "Défenseur central",
+    Lateral = "Défenseur latéral",
+    MilieuDefensif = "Milieu défensif",
+    MilieuOffensif = "Milieu offensif",
+    Attaquant = "Attaquant",
+}
+
+// Interface
 interface MainStatsProps {
     stats: number | string;
     position?: boolean;
     age?: boolean;
-}
-
-interface playerPositionFunction {
-    arg1: number;
 }
 
 const MainStats: React.FC<MainStatsProps> = props => {
@@ -20,23 +28,23 @@ const MainStats: React.FC<MainStatsProps> = props => {
         let position;
 
         switch (ultraPosition) {
-            case 10:
-                position = "Gardien";
+            case PositionJoueur.Gardien:
+                position = Position.Gardien;
                 break;
-            case 20:
-                position = "Défenseur central";
+            case PositionJoueur.Defenseur:
+                position = Position.Defenseur;
                 break;
-            case 21:
-                position = "Défenseur latéral";
+            case PositionJoueur.Lateral:
+                position = Position.Lateral;
                 break;
-            case 31:
-                position = "Milieu défensif";
+            case PositionJoueur.MilieuDefensif:
+                position = Position.MilieuDefensif;
                 break;
-            case 32:
-                position = "Milieu offensif";
+            case PositionJoueur.MilieuOffensif:
+                position = Position.MilieuOffensif;
                 break;
-            case 40:
-                position = "Attaquant";
+            case PositionJoueur.Attaquant:
+                position = Position.Attaquant;
                 break;
             default:
                 position = null;
